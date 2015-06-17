@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<h3>Tanks for <%= @station.name %></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Gasoline</th>
+      <th>Capacity</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tanks.each do |item| %>
+      <tr>
+        <td><%= item.gasoline %></td>
+        <td><%= item.id %></td>
+        <td><%= link_to 'Edit', edit_station_tank_path(@station, item) %></td>
+        <td><%= link_to 'Destroy', [@station, item], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tank', new_station_tank_path %>
