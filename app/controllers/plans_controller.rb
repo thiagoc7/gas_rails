@@ -1,8 +1,21 @@
 class PlansController < ApplicationController
-  before_action :set_plan, only: [:show, :edit, :update, :destroy]
+  before_action :set_plan, only: [:edit, :update, :destroy]
 
   def index
-    @plans = Plan.all
+    if params[:begin_date] && params[:begin_date]
+      @plans = Plan.between_dates(params[:begin_date], params[:end_date])
+    else
+      @plans = Plan.order('date DESC').limit(10)
+    end
+  end
+
+  def measures
+  end
+
+  def forecast
+  end
+
+  def buy
   end
 
   def new

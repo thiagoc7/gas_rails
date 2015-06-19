@@ -28,21 +28,26 @@ ActiveRecord::Schema.define(version: 20150618021233) do
   add_index "measures", ["tank_id"], name: "index_measures_on_tank_id"
 
   create_table "plans", force: :cascade do |t|
-    t.date     "date",                        null: false
-    t.string   "holiday"
-    t.boolean  "day_before",  default: false
+    t.date     "date",                              null: false
     t.string   "day_of_week"
+    t.integer  "date_type"
+    t.boolean  "business_day",      default: true
+    t.boolean  "finished",          default: false
+    t.string   "holiday"
+    t.integer  "holiday_reference"
     t.integer  "station_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "plans", ["station_id"], name: "index_plans_on_station_id"
 
   create_table "stations", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "strong_days"
+    t.string   "weak_days"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "tanks", force: :cascade do |t|

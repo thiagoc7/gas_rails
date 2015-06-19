@@ -14,6 +14,7 @@ gem 'materialize-sass'
 gem 'holidays'
 
 group :development, :test do
+  gem 'better_errors'
   gem 'pry-rails'
   gem 'jazz_fingers'
   gem 'web-console', '~> 2.0'

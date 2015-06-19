@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
 
-  resources :measures
+  resources :plans do
+    collection do
+      get :measures
+      get :forecast
+      get :buy
+    end
+  end
 
-  resources :plans
   resources :stations do
     resources :tanks do
       collection { post :import }

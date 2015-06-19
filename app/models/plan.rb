@@ -4,6 +4,9 @@ class Plan < ActiveRecord::Base
 
   validates_uniqueness_of :date, scope: :station
 
+  attr_accessor :fresh
+  after_find :set_finished
+
   accepts_nested_attributes_for :measures
 
   include PlanHolidays
@@ -21,5 +24,21 @@ class Plan < ActiveRecord::Base
 
   def self.last_date
     Plan.order('date DESC').first.date
+  end
+
+  def self.between_dates(from, to)
+    where(date: from..to).order('date DESC')
+  end
+
+  private
+  def set_finished
+    return if self.finished?
+    result = true
+
+    measures.each do |m|
+      result = false unless m.final_volume
+    end
+
+    self.finished = result
   end
 end
