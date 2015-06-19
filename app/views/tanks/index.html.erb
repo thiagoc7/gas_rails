@@ -7,6 +7,8 @@
     <tr>
       <th>Gasoline</th>
       <th>Capacity</th>
+      <th>Min</th>
+      <th>Max</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -15,7 +17,9 @@
     <% @tanks.each do |item| %>
       <tr>
         <td><%= item.gasoline %></td>
-        <td><%= item.id %></td>
+        <td><%= item.capacity %></td>
+        <td><%= item.min_volume %></td>
+        <td><%= item.max_volume %></td>
         <td><%= link_to 'Edit', edit_station_tank_path(@station, item) %></td>
         <td><%= link_to 'Destroy', [@station, item], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

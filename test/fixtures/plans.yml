@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2015-06-17
+  holiday: MyString
+  day_before: false
+  day_of_week: MyString
+  station_id: 
+
+two:
+  date: 2015-06-17
+  holiday: MyString
+  day_before: false
+  day_of_week: MyString
+  station_id: 

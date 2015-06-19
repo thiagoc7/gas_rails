@@ -1,0 +1,25 @@
+class Plan < ActiveRecord::Base
+  belongs_to :station
+  has_many :measures
+
+  validates_uniqueness_of :date, scope: :station
+
+  accepts_nested_attributes_for :measures
+
+  include PlanHolidays
+  include PlanMeasures
+
+  def self.create_plans(station_id, begin_date = Date.tomorrow, end_date = nil)
+    result = []
+    end_date ||= begin_date
+
+    (begin_date.to_date..end_date.to_date).each do |date|
+      result << Plan.find_or_create_by(date: date, station_id: station_id)
+    end
+    result
+  end
+
+  def self.last_date
+    Plan.order('date DESC').first.date
+  end
+end

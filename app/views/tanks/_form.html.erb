@@ -11,15 +11,39 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :gasoline %><br>
+  <div class="input-field">
     <%= f.text_field :gasoline %>
+    <%= f.label :gasoline %><br>
   </div>
-  <div class="field">
-    <%= f.label :capacity %><br>
+  <div class="input-field">
     <%= f.text_field :capacity %>
+    <%= f.label :capacity %><br>
   </div>
+  <div class="input-field">
+    <%= f.text_field :min_volume %>
+    <%= f.label :min_volume %><br>
+  </div>
+  <div class="input-field">
+    <%= f.text_field :max_volume %>
+    <%= f.label :max_volume %><br>
+  </div>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit nil, class: 'btn' %>
   </div>
 <% end %>
+
+<br>
+<h5>Import a CSV File</h5>
+<%= form_tag import_station_tanks_path, multipart: true do %>
+  <div class="file-field input-field">
+    <input class="file-path validate" placeholder="import measures" type="text"/>
+    <div class="btn">
+      <span>File</span>
+      <%= file_field_tag :file %>
+    </div>
+  </div>
+  <%= hidden_field_tag :gasoline, @tank.gasoline %>
+  <%= submit_tag "Import CSV", class: 'btn' %>
+<% end %>
+

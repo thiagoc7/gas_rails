@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  plan_id: 
+  tank_id: 
+  volume: 1
+
+two:
+  plan_id: 
+  tank_id: 
+  volume: 1

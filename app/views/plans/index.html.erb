@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Plans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Station</th>
+      <th>Holiday</th>
+      <th>Day before</th>
+      <th>Day of week</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @plans.each do |plan| %>
+      <tr>
+        <td><%= plan.date %></td>
+        <td><%= plan.station.name %></td>
+        <td><%= plan.holiday %></td>
+        <td><%= plan.day_before %></td>
+        <td><%= plan.day_of_week %></td>
+        <td><%= link_to 'Measures', edit_plan_path(plan) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Plan', new_plan_path %>

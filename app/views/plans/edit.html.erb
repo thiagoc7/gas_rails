@@ -1,0 +1,40 @@
+<h3> <%= @plan.station.name + ' - ' + @plan.date.to_s %></h3>
+
+<%= form_for(@plan) do |f| %>
+    <table>
+      <thead>
+      <tr>
+        <th colspan="1"></th>
+        <% @plan.measures.each do |l| %>
+          <th><%= l.tank.gasoline %></th>
+        <% end %>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr>
+        <td>Final Volume</td>
+        <%= f.fields_for :measures do |m| %>
+          <td>
+            <%= m.text_field :final_volume %>
+          </td>
+        <% end %>
+      </tr>
+      <tr>
+        <td>Buy Volume</td>
+        <%= f.fields_for :measures do |m| %>
+          <td>
+            <%= m.text_field :buy_volume %>
+          </td>
+        <% end %>
+      </tr>
+      </tbody>
+    </table>
+
+  <div class="actions">
+    <%= f.submit nil, class: 'btn' %>
+  </div>
+<% end %>
+
+<br>
+<%= link_to 'Back', plans_path %>

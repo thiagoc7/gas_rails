@@ -12,6 +12,11 @@ class TanksController < ApplicationController
   def edit
   end
 
+  def import
+    Measure.import(params[:file], params[:station_id], params[:gasoline])
+    redirect_to station_tanks_path, notice: 'Imported'
+  end
+
   def create
     @tank = @station.tanks.create(tank_params)
 
@@ -24,6 +29,7 @@ class TanksController < ApplicationController
 
   def update
     if @tank.update(tank_params)
+      import_measures
       redirect_to station_tanks_path, notice: 'Tank was successfully updated.'
     else
       render :edit
@@ -49,6 +55,6 @@ class TanksController < ApplicationController
     end
 
     def tank_params
-      params.require(:tank).permit(:gasoline, :capacity)
+      params.require(:tank).permit(:gasoline, :capacity, :min_volume, :max_volume)
     end
 end
