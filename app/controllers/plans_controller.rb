@@ -10,12 +10,15 @@ class PlansController < ApplicationController
   end
 
   def measures
+    @plans = Plan.where(finished: false).order('station_id, date')
   end
 
   def forecast
+    @plans = Plan.where(finished: false).order('station_id, date')
   end
 
   def buy
+    @plans = Plan.where(finished: false).order('station_id, date')
   end
 
   def new
@@ -37,9 +40,9 @@ class PlansController < ApplicationController
 
   def update
     if @plan.update(plan_params)
-      redirect_to plans_url, notice: 'Plan was successfully updated.'
+      redirect_to update_redirect, notice: 'Plan was successfully updated.'
     else
-      redirect_to plans_url, notice: 'Fail.'
+      redirect_to update_redirect, notice: 'Fail.'
     end
   end
 
@@ -49,14 +52,29 @@ class PlansController < ApplicationController
   end
 
   private
+    def update_redirect
+      return plans_url unless params[:redirect_to]
+
+      if params[:redirect_to][:measures]
+        measures_plans_url
+      elsif params[:redirect_to][:forecast]
+        forecast_plans_url
+      elsif params[:redirect_to][:buy]
+        buy_plans_url
+      else
+        plans_url
+      end
+    end
+
     def set_plan
       @plan = Plan.find(params[:id])
+      @plan.finished = true if params[:redirect_to] && params[:redirect_to][:measures]
     end
 
     def plan_params
       params.require(:plan).permit(:date,
                                    :station_id,
-                                   measures_attributes: [:id, :final_volume, :buy_volume]
+                                   measures_attributes: [:id, :final_volume, :buy_volume, :forecast_volume]
       )
     end
 end

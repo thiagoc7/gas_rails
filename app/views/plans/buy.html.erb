@@ -1,1 +1,66 @@
-<h1>buy</h1>
+<h4>Compras</h4>
+
+<%= render 'plans/partials/search_form' %>
+
+<% @plans.each do |plan| %>
+
+  <div class="row">
+    <div class="section">
+      <h5> <%= plan.station.name + ' - ' + plan.date.to_s %></h5>
+      <%= form_for(plan) do |f| %>
+        <%= hidden_field :redirect_to, 'buy' %>
+
+        <table>
+          <thead>
+          <tr>
+            <th colspan="1"></th>
+            <% plan.measures.each do |l| %>
+              <th><%= l.tank.gasoline %></th>
+            <% end %>
+          </tr>
+          </thead>
+
+          <tbody>
+
+          <tr>
+            <td>Estoque Inicial</td>
+            <% plan.measures.each do |m| %>
+              <td><%= m.initial_volume %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td>Vendas</td>
+            <% plan.measures.each do |m| %>
+              <td><%= m.forecast_volume %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td>Compras</td>
+            <%= f.fields_for :measures do |m| %>
+              <td>
+                <%= m.text_field :buy_volume %>
+              </td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td>Estoque Final</td>
+            <% plan.measures.each do |m| %>
+              <td><%= m.forecast_final_volume %></td>
+            <% end %>
+          </tr>
+          </tbody>
+        </table>
+
+        <div class="actions">
+          <%= f.submit 'save', class: 'btn' %>
+        </div>
+      <% end %>
+      <div class="divider"></div>
+    </div>
+  </div>
+
+<% end %>
+

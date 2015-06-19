@@ -13,11 +13,9 @@
 
       <tbody>
       <tr>
-        <td>Final Volume</td>
-        <%= f.fields_for :measures do |m| %>
-          <td>
-            <%= m.text_field :final_volume %>
-          </td>
+        <td>Initial Volume</td>
+        <% @plan.measures.each do |m| %>
+          <td><%= m.initial_volume %></td>
         <% end %>
       </tr>
       <tr>
@@ -25,6 +23,26 @@
         <%= f.fields_for :measures do |m| %>
           <td>
             <%= m.text_field :buy_volume %>
+          </td>
+        <% end %>
+      </tr>
+      <tr>
+        <td>Forecast Volume</td>
+        <% @plan.measures.each do |m| %>
+          <td><%= m.forecast_volume %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <td>Sell Volume</td>
+        <% @plan.measures.each do |m| %>
+          <td><%= m.sell_volume %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <td>Final Volume</td>
+        <%= f.fields_for :measures do |m| %>
+          <td>
+            <%= m.text_field :final_volume %>
           </td>
         <% end %>
       </tr>

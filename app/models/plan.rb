@@ -11,6 +11,8 @@ class Plan < ActiveRecord::Base
 
   include PlanHolidays
   include PlanMeasures
+  include PlanBuySuggestion
+  include PlanForecast
 
   def self.create_plans(station_id, begin_date = Date.tomorrow, end_date = nil)
     result = []
@@ -34,11 +36,9 @@ class Plan < ActiveRecord::Base
   def set_finished
     return if self.finished?
     result = true
-
     measures.each do |m|
       result = false unless m.final_volume
     end
-
     self.finished = result
   end
 end
