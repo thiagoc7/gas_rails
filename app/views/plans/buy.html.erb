@@ -4,63 +4,69 @@
 
 <% @plans.each do |plan| %>
 
-  <div class="row">
-    <div class="section">
-      <h5> <%= plan.station.name + ' - ' + plan.date.to_s %></h5>
-      <%= form_for(plan) do |f| %>
-        <%= hidden_field :redirect_to, 'buy' %>
+  <div class="card-panel">
+    <h5> <%= plan.station.name + ' - ' + plan.date.to_s %></h5>
+    <%= form_for(plan) do |f| %>
+      <%= hidden_field :redirect_to, 'buy' %>
 
-        <table>
-          <thead>
-          <tr>
-            <th colspan="1"></th>
-            <% plan.measures.each do |l| %>
-              <th><%= l.tank.gasoline %></th>
-            <% end %>
-          </tr>
-          </thead>
+      <table>
+        <thead>
+        <tr>
+          <th colspan="1"></th>
+          <% plan.measures_hash[:labels].each do |label| %>
+            <th><%= label %></th>
+          <% end %>
+        </tr>
+        </thead>
 
-          <tbody>
+        <tbody>
 
-          <tr>
-            <td>Estoque Inicial</td>
-            <% plan.measures.each do |m| %>
-              <td><%= m.initial_volume %></td>
-            <% end %>
-          </tr>
+        <tr>
+          <td>Estoque Inicial</td>
+          <% plan.measures_hash[:initial_volume].each do |volume| %>
+            <td><%= volume %></td>
+          <% end %>
+        </tr>
 
-          <tr>
-            <td>Vendas</td>
-            <% plan.measures.each do |m| %>
-              <td><%= m.forecast_volume %></td>
-            <% end %>
-          </tr>
+        <tr>
+          <td>Vendas</td>
+          <% plan.measures_hash[:forecast_volume].each do |volume| %>
+            <td><%= volume %></td>
+          <% end %>
+        </tr>
 
-          <tr>
-            <td>Compras</td>
-            <%= f.fields_for :measures do |m| %>
-              <td>
-                <%= m.text_field :buy_volume %>
-              </td>
-            <% end %>
-          </tr>
+        <tr>
+          <td>Compras</td>
+          <%= f.fields_for :measures do |m| %>
+            <td>
+              <%= m.text_field :buy_volume, class: 'money' %>
+            </td>
+          <% end %>
+        </tr>
 
-          <tr>
-            <td>Estoque Final</td>
-            <% plan.measures.each do |m| %>
-              <td><%= m.forecast_final_volume %></td>
-            <% end %>
-          </tr>
-          </tbody>
-        </table>
+        <tr>
+          <td>Estoque Final</td>
+          <% plan.measures_hash[:forecast_final_volume].each do |volume| %>
+            <td><%= volume %></td>
+          <% end %>
+        </tr>
+        </tbody>
+      </table>
 
-        <div class="actions">
-          <%= f.submit 'save', class: 'btn' %>
-        </div>
-      <% end %>
-      <div class="divider"></div>
-    </div>
+      <div class="actions">
+        <%= f.submit 'save', class: 'btn' %>
+      </div>
+    <% end %>
   </div>
 
 <% end %>
 
+<div class="row">
+  <div class="section">
+    <div class="left-align">
+      <%= link_to forecast_plans_path, class: 'btn-floating btn-large waves-effect waves-light red' do %>
+        <i class="mdi-navigation-arrow-back"></i>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="<%= date_class plan %>">
+  <h5><%= plan.station.name %></h5>
+  <h5><%= format plan.date %></h5>
+  <p>
+    <% plan.events.each do |event| %>
+      <span class="red-text">
+        <%= event %>
+      </span>
+    <% end %>
+  </p>
+</div>

@@ -1,12 +1,11 @@
 <div class="section">
-  <h5>Filer</h5>
   <%= form_tag '', method: :get do %>
     <div class="row">
       <div class="input-field col s4">
-        <%= date_field_tag :begin_date, class: 'datepicker' %>
+        <%= date_field_tag :begin_date, nil, class: 'datepicker', placeholder: 'data inicial' %>
       </div>
       <div class="input-field col s4">
-        <%= date_field_tag :end_date, class: 'datepicker'  %>
+        <%= date_field_tag :end_date, nil, class: 'datepicker', placeholder: 'data final'  %>
       </div>
       <div class="input-field col s4">
         <%= submit_tag 'Filter', class: 'btn' %>
@@ -14,4 +13,3 @@
     </div>
   <% end %>
 </div>
-<div class="divider"></div>

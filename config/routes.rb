@@ -14,5 +14,5 @@ Rails.application.routes.draw do
     end
   end
 
-  root 'stations#index'
+  root 'plans#measures'
 end

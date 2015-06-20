@@ -1,56 +1,64 @@
 <h4>Previsão de Vendas</h4>
 
 <%= render 'plans/partials/search_form' %>
+<%= render 'plans/partials/add_form' %>
 
 <% @plans.each do |plan| %>
 
-  <div class="row">
-    <div class="section">
-      <h5> <%= plan.station.name + ' - ' + plan.date.to_s %></h5>
-      <%= form_for(plan) do |f| %>
-        <%= hidden_field :redirect_to, 'forecast' %>
+  <div class="card-panel">
+    <%= render 'plans/partials/date_info', plan: plan %>
+    <%= form_for(plan) do |f| %>
+      <%= hidden_field :redirect_to, 'forecast' %>
 
-        <table>
-          <thead>
-          <tr>
-            <th colspan="1"></th>
-            <% plan.measures.each do |l| %>
-              <th><%= l.tank.gasoline %></th>
-            <% end %>
-          </tr>
-          </thead>
-
-          <tbody>
-
-          <% plan.similar_plans.each do |s| %>
-            <tr>
-              <td><%= s.date %></td>
-              <% s.measures.each do |ss| %>
-                <td>
-                  <%= ss.sell_volume %>
-                </td>
-              <% end %>
-            </tr>
+      <table>
+        <thead>
+        <tr>
+          <th colspan="1"></th>
+          <% plan.measures.each do |l| %>
+            <th><%= l.tank.gasoline %></th>
           <% end %>
+        </tr>
+        </thead>
 
+        <tbody>
+
+        <% plan.similar_plans.each do |s| %>
           <tr>
-            <td>Previsão</td>
-            <%= f.fields_for :measures do |m| %>
+            <td><%= s.date %></td>
+            <% s.measures.each do |ss| %>
               <td>
-                <%= m.text_field :forecast_volume %>
+                <%= format ss.sell_volume %>
               </td>
             <% end %>
           </tr>
-          </tbody>
-        </table>
+        <% end %>
 
-        <div class="actions">
-          <%= f.submit 'save', class: 'btn' %>
-        </div>
-      <% end %>
-      <div class="divider"></div>
-    </div>
+        <tr>
+          <td>Previsão</td>
+          <%= f.fields_for :measures do |m| %>
+            <td>
+              <%= m.text_field :forecast_volume, class: 'money' %>
+            </td>
+          <% end %>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="actions">
+        <%= f.submit 'save', class: 'btn' %>
+      </div>
+    <% end %>
   </div>
 
 <% end %>
+
+<div class="row">
+  <div class="section">
+    <div class="right-align">
+      <%= link_to buy_plans_path, class: 'btn-floating btn-large waves-effect waves-light red' do %>
+        <i class="mdi-navigation-arrow-forward"></i>
+      <% end %>
+    </div>
+  </div>
+</div>
 

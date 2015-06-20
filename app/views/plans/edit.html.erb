@@ -1,25 +1,25 @@
-<h3> <%= @plan.station.name + ' - ' + @plan.date.to_s %></h3>
+<%= render 'plans/partials/date_info', plan: @plan %>
 
 <%= form_for(@plan) do |f| %>
     <table>
       <thead>
       <tr>
         <th colspan="1"></th>
-        <% @plan.measures.each do |l| %>
-          <th><%= l.tank.gasoline %></th>
+        <% @plan.measures_hash[:labels].each do |label| %>
+          <th><%= label %></th>
         <% end %>
       </tr>
       </thead>
 
       <tbody>
       <tr>
-        <td>Initial Volume</td>
-        <% @plan.measures.each do |m| %>
-          <td><%= m.initial_volume %></td>
+        <td>Estoque Inicial</td>
+        <% @plan.measures_hash[:initial_volume].each do |volume| %>
+          <td><%= format_real volume %></td>
         <% end %>
       </tr>
       <tr>
-        <td>Buy Volume</td>
+        <td>Compras</td>
         <%= f.fields_for :measures do |m| %>
           <td>
             <%= m.text_field :buy_volume %>
@@ -27,15 +27,15 @@
         <% end %>
       </tr>
       <tr>
-        <td>Forecast Volume</td>
-        <% @plan.measures.each do |m| %>
-          <td><%= m.forecast_volume %></td>
+        <td>Vendas Previstas</td>
+        <% @plan.measures_hash[:forecast_volume].each do |volume| %>
+          <td><%= format_real volume %></td>
         <% end %>
       </tr>
       <tr>
-        <td>Sell Volume</td>
-        <% @plan.measures.each do |m| %>
-          <td><%= m.sell_volume %></td>
+        <td>Vendas Reais</td>
+        <% @plan.measures_hash[:sell_volume].each do |volume| %>
+          <td><%= format_real volume %></td>
         <% end %>
       </tr>
       <tr>

@@ -1,24 +1,24 @@
 class PlansController < ApplicationController
   before_action :set_plan, only: [:edit, :update, :destroy]
+  before_action :set_plans, only: [:measures, :forecast, :buy]
 
   def index
     if params[:begin_date] && params[:begin_date]
-      @plans = Plan.between_dates(params[:begin_date], params[:end_date])
+      @plans = Plan.between_dates(params[:begin_date], params[:end_date]).order('date DESC')
     else
       @plans = Plan.order('date DESC').limit(10)
     end
   end
 
   def measures
-    @plans = Plan.where(finished: false).order('station_id, date')
+    redirect_to forecast_plans_url if @plans.empty?
   end
 
   def forecast
-    @plans = Plan.where(finished: false).order('station_id, date')
+    @plans = Plan.create_next_plans if @plans.empty?
   end
 
   def buy
-    @plans = Plan.where(finished: false).order('station_id, date')
   end
 
   def new
@@ -69,6 +69,17 @@ class PlansController < ApplicationController
     def set_plan
       @plan = Plan.find(params[:id])
       @plan.finished = true if params[:redirect_to] && params[:redirect_to][:measures]
+    end
+
+    def set_plans
+      if params[:add_plan]
+        @plans = Plan.create_next_plans
+      elsif params[:begin_date] && params[:begin_date]
+        @plans = Plan.create_plans_for_all(params[:begin_date], params[:begin_date])
+      else
+        @plans = Plan.open_plans
+      end
+
     end
 
     def plan_params

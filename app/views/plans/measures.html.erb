@@ -4,40 +4,37 @@
 
 <% @plans.each do |plan| %>
 
-  <div class="row">
-    <div class="section">
-      <h5> <%= plan.station.name + ' - ' + plan.date.to_s %></h5>
-      <%= form_for(plan) do |f| %>
-        <%= hidden_field :redirect_to, 'measures' %>
+  <div class="card-panel">
+    <h5> <%= plan.station.name + ' - ' + plan.date.to_s %></h5>
+    <%= form_for(plan) do |f| %>
+      <%= hidden_field :redirect_to, 'measures' %>
 
-        <table>
-          <thead>
-          <tr>
-            <th colspan="1"></th>
-            <% plan.measures.each do |l| %>
-              <th><%= l.tank.gasoline %></th>
-            <% end %>
-          </tr>
-          </thead>
+      <table>
+        <thead>
+        <tr>
+          <th colspan="1"></th>
+          <% plan.measures.each do |l| %>
+            <th><%= l.tank.gasoline %></th>
+          <% end %>
+        </tr>
+        </thead>
 
-          <tbody>
-          <tr>
-            <td>Final Volume</td>
-            <%= f.fields_for :measures do |m| %>
-              <td>
-                <%= m.text_field :final_volume %>
-              </td>
-            <% end %>
-          </tr>
-          </tbody>
-        </table>
+        <tbody>
+        <tr>
+          <td>Final Volume</td>
+          <%= f.fields_for :measures do |m| %>
+            <td>
+              <%= m.text_field :final_volume, class: 'money' %>
+            </td>
+          <% end %>
+        </tr>
+        </tbody>
+      </table>
 
-        <div class="actions">
-          <%= f.submit 'save', class: 'btn' %>
-        </div>
-      <% end %>
-      <div class="divider"></div>
-    </div>
+      <div class="actions">
+        <%= f.submit 'save', class: 'btn' %>
+      </div>
+    <% end %>
   </div>
 
 <% end %>

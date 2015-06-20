@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150618021233) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "measures", force: :cascade do |t|
     t.integer  "plan_id"
     t.integer  "tank_id"
@@ -24,14 +27,13 @@ ActiveRecord::Schema.define(version: 20150618021233) do
     t.datetime "updated_at",                  null: false
   end
 
-  add_index "measures", ["plan_id"], name: "index_measures_on_plan_id"
-  add_index "measures", ["tank_id"], name: "index_measures_on_tank_id"
+  add_index "measures", ["plan_id"], name: "index_measures_on_plan_id", using: :btree
+  add_index "measures", ["tank_id"], name: "index_measures_on_tank_id", using: :btree
 
   create_table "plans", force: :cascade do |t|
     t.date     "date",                              null: false
-    t.string   "day_of_week"
+    t.integer  "day_of_week"
     t.integer  "date_type"
-    t.boolean  "business_day",      default: true
     t.boolean  "finished",          default: false
     t.string   "holiday"
     t.integer  "holiday_reference"
@@ -40,7 +42,7 @@ ActiveRecord::Schema.define(version: 20150618021233) do
     t.datetime "updated_at",                        null: false
   end
 
-  add_index "plans", ["station_id"], name: "index_plans_on_station_id"
+  add_index "plans", ["station_id"], name: "index_plans_on_station_id", using: :btree
 
   create_table "stations", force: :cascade do |t|
     t.string   "name"
@@ -60,6 +62,10 @@ ActiveRecord::Schema.define(version: 20150618021233) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "tanks", ["station_id"], name: "index_tanks_on_station_id"
+  add_index "tanks", ["station_id"], name: "index_tanks_on_station_id", using: :btree
 
+  add_foreign_key "measures", "plans"
+  add_foreign_key "measures", "tanks"
+  add_foreign_key "plans", "stations"
+  add_foreign_key "tanks", "stations"
 end

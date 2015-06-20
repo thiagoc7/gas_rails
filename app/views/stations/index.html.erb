@@ -3,7 +3,7 @@
 <h3>Create a New Station</h3>
 <%= form_for @station, id: 'new_station' do |form| %>
   <%= form.text_field :name %>
-  <%= form.submit %>
+  <%= form.submit nil, class: 'btn' %>
 <% end %>
 
 <h3>Listing Stations</h3>

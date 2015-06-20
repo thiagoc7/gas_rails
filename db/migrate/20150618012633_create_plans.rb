@@ -2,9 +2,8 @@ class CreatePlans < ActiveRecord::Migration
   def change
     create_table :plans do |t|
       t.date :date, null: false
-      t.string :day_of_week
+      t.integer :day_of_week
       t.integer :date_type
-      t.boolean :business_day, default: true
 
       t.boolean :finished, default: false
 
