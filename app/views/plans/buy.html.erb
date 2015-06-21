@@ -2,69 +2,75 @@
 
 <%= render 'plans/partials/search_form' %>
 
-<% @plans.each do |plan| %>
+<%= cache(cache_key_for_plans(@plans)) do %>
 
-  <div class="card-panel">
-    <%= render 'plans/partials/date_info', plan: plan %>
-    <%= form_for(plan) do |f| %>
-      <%= hidden_field :redirect_to, 'buy' %>
+  <% @plans.each do |plan| %>
 
-      <table>
-        <thead>
-        <tr>
-          <th colspan="1"></th>
-          <% plan.measures_hash[:labels].each do |label| %>
-            <th><%= label %></th>
-          <% end %>
-        </tr>
-        </thead>
+    <% cache(plan) do %>
 
-        <tbody>
+      <div class="card-panel">
+        <%= render 'plans/partials/date_info', plan: plan %>
+        <%= form_for(plan) do |f| %>
+          <%= hidden_field :redirect_to, 'buy' %>
 
-        <tr>
-          <td>Estoque Inicial</td>
-          <% plan.measures_hash[:initial_volume].each do |volume| %>
-            <td><%= format volume %></td>
-          <% end %>
-        </tr>
+          <table>
+            <thead>
+            <tr>
+              <th colspan="1"></th>
+              <% plan.measures_hash[:labels].each do |label| %>
+                <th><%= label %></th>
+              <% end %>
+            </tr>
+            </thead>
 
-        <tr>
-          <td>Vendas</td>
-          <% plan.measures_hash[:forecast_volume].each do |volume| %>
-            <td><%= format volume %></td>
-          <% end %>
-        </tr>
+            <tbody>
 
-        <tr>
-          <td>Compras</td>
-          <%= f.fields_for :measures do |m| %>
-            <td>
-              <%= m.text_field :buy_volume, class: 'money' %>
-            </td>
-          <% end %>
-        </tr>
+            <tr>
+              <td>Estoque Inicial</td>
+              <% plan.measures_hash[:initial_volume].each do |volume| %>
+                <td><%= format volume %></td>
+              <% end %>
+            </tr>
 
-        <tr>
-          <td>Estoque Final</td>
-          <% plan.measures_hash[:forecast_final_volume].each do |volume| %>
-            <td><%= format volume %></td>
-          <% end %>
-        </tr>
-        </tbody>
-      </table>
+            <tr>
+              <td>Vendas</td>
+              <% plan.measures_hash[:forecast_volume].each do |volume| %>
+                <td><%= format volume %></td>
+              <% end %>
+            </tr>
 
-      <div class="actions">
-        <%= f.submit 'save', class: 'btn' %>
+            <tr>
+              <td>Compras</td>
+              <%= f.fields_for :measures do |m| %>
+                <td>
+                  <%= m.text_field :buy_volume, class: 'money' %>
+                </td>
+              <% end %>
+            </tr>
+
+            <tr>
+              <td>Estoque Final</td>
+              <% plan.measures_hash[:forecast_final_volume].each do |volume| %>
+                <td><%= format volume %></td>
+              <% end %>
+            </tr>
+            </tbody>
+          </table>
+
+          <div class="actions">
+            <%= f.submit 'save', class: 'btn' %>
+          </div>
+        <% end %>
       </div>
-    <% end %>
-  </div>
 
+    <% end %>
+  <% end %>
 <% end %>
 
 <div class="row">
   <div class="section">
     <div class="left-align">
-      <%= link_to forecast_plans_path, class: 'btn-floating btn-large waves-effect waves-light red' do %>
+      <%= link_to forecast_plans_path, class: 'btn-floating btn-large waves-effect waves-light deep-orange darken-1' do %>
         <i class="mdi-navigation-arrow-back"></i>
       <% end %>
     </div>

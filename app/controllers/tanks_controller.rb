@@ -29,7 +29,6 @@ class TanksController < ApplicationController
 
   def update
     if @tank.update(tank_params)
-      import_measures
       redirect_to station_tanks_path, notice: 'Tank was successfully updated.'
     else
       render :edit

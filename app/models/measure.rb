@@ -1,12 +1,10 @@
 class Measure < ActiveRecord::Base
-  belongs_to :plan, inverse_of: :measures
+  belongs_to :plan, touch: true
   belongs_to :tank
   default_scope { order('tank_id') }
 
   validates_presence_of :plan, :tank
   validates_uniqueness_of :tank, scope: :plan
-
-  # before_save :adjust_integers
 
   include MeasuresImport
 
@@ -28,20 +26,4 @@ class Measure < ActiveRecord::Base
   def forecast_final_volume
     initial_volume + buy_volume - forecast_volume
   end
-
-  private
-  def adjust_integers
-    self.final_volume = string_to_integer(final_volume)
-    self.forecast_volume = string_to_integer(forecast_volume)
-    self.buy_volume = string_to_integer(buy_volume)
-  end
-
-  def string_to_integer(number)
-    if number
-      number.to_s.gsub('.', '').to_i
-    else
-      nil
-    end
-  end
-
 end

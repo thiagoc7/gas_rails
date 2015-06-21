@@ -1,6 +1,6 @@
 class Plan < ActiveRecord::Base
   belongs_to :station
-  has_many :measures, inverse_of: :plan
+  has_many :measures
 
   validates_uniqueness_of :date, scope: :station
 

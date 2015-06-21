@@ -14,4 +14,10 @@ module ApplicationHelper
   def format_real(number)
     number_with_delimiter(number, delimiter: ".")
   end
+
+  def cache_key_for_plans(plans, suffix = '')
+    ids = plans.map(&:id).join('-')
+    max_updated_at = plans.map(&:updated_at).max
+    "plans/#{ids}-#{max_updated_at.to_i}#{suffix}"
+  end
 end
