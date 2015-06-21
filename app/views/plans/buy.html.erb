@@ -5,7 +5,7 @@
 <% @plans.each do |plan| %>
 
   <div class="card-panel">
-    <h5> <%= plan.station.name + ' - ' + plan.date.to_s %></h5>
+    <%= render 'plans/partials/date_info', plan: plan %>
     <%= form_for(plan) do |f| %>
       <%= hidden_field :redirect_to, 'buy' %>
 
@@ -24,14 +24,14 @@
         <tr>
           <td>Estoque Inicial</td>
           <% plan.measures_hash[:initial_volume].each do |volume| %>
-            <td><%= volume %></td>
+            <td><%= format volume %></td>
           <% end %>
         </tr>
 
         <tr>
           <td>Vendas</td>
           <% plan.measures_hash[:forecast_volume].each do |volume| %>
-            <td><%= volume %></td>
+            <td><%= format volume %></td>
           <% end %>
         </tr>
 
@@ -47,7 +47,7 @@
         <tr>
           <td>Estoque Final</td>
           <% plan.measures_hash[:forecast_final_volume].each do |volume| %>
-            <td><%= volume %></td>
+            <td><%= format volume %></td>
           <% end %>
         </tr>
         </tbody>

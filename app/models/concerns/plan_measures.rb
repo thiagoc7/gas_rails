@@ -24,7 +24,7 @@ module PlanMeasures
       result[:sell_volume] << measure.sell_volume
       result[:forecast_volume] << measure.forecast_volume
       result[:final_volume] << measure.final_volume
-      result[:forecast_final_volume] << measure.final_volume
+      result[:forecast_final_volume] << measure.forecast_final_volume
     end
     result
   end

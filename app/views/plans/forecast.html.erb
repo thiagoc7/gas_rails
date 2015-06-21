@@ -13,7 +13,7 @@
       <table>
         <thead>
         <tr>
-          <th colspan="1"></th>
+          <th colspan="2"></th>
           <% plan.measures.each do |l| %>
             <th><%= l.tank.gasoline %></th>
           <% end %>
@@ -24,17 +24,15 @@
 
         <% plan.similar_plans.each do |s| %>
           <tr>
-            <td><%= s.date %></td>
-            <% s.measures.each do |ss| %>
-              <td>
-                <%= format ss.sell_volume %>
-              </td>
+            <% s.each do |ss| %>
+              <td><%= format_small ss %></td>
             <% end %>
           </tr>
         <% end %>
 
         <tr>
           <td>Previsão</td>
+          <td colspan="1"></td>
           <%= f.fields_for :measures do |m| %>
             <td>
               <%= m.text_field :forecast_volume, class: 'money' %>
