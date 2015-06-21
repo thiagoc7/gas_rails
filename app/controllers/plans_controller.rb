@@ -3,7 +3,7 @@ class PlansController < ApplicationController
   before_action :set_plans, only: [:measures, :forecast, :buy]
 
   def index
-    if params[:begin_date] && params[:begin_date]
+    if params[:begin_date] && params[:end_date]
       @plans = Plan.between_dates(params[:begin_date], params[:end_date]).order('date DESC')
     else
       @plans = Plan.order('date DESC').limit(10)
@@ -74,8 +74,8 @@ class PlansController < ApplicationController
     def set_plans
       if params[:add_plan]
         @plans = Plan.create_next_plans
-      elsif params[:begin_date] && params[:begin_date]
-        @plans = Plan.create_plans_for_all(params[:begin_date], params[:begin_date])
+      elsif params[:begin_date] && params[:end_date]
+        @plans = Plan.create_plans_for_all(params[:begin_date], params[:end_date])
       else
         @plans = Plan.open_plans
       end

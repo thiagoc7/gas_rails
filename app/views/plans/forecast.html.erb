@@ -24,8 +24,12 @@
 
         <% plan.similar_plans.each do |s| %>
           <tr>
-            <% s.each do |ss| %>
-              <td><%= format_small ss %></td>
+            <td><%= format_small s.date %></td>
+            <td><%= events s %></td>
+            <% s.measures.each do |ss| %>
+              <td>
+                <%= format ss.sell_volume %>
+              </td>
             <% end %>
           </tr>
         <% end %>

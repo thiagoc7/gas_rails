@@ -15,7 +15,7 @@ module PlanCreate
     def create_plans_for_all(begin_date = Date.tomorrow, end_date = nil)
       result = []
       Station.all.each do |station|
-        result + Plan.create_plans(station.id, begin_date, end_date)
+        result += Plan.create_plans(station.id, begin_date, end_date)
       end
       result
     end

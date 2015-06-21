@@ -4,8 +4,8 @@ module PlanHolidays
   included do
     before_save :set_holiday, :set_day_of_week, :set_date_type
 
-    enum holiday_reference: %w(before after)
-    enum date_type: %w(weak strong)
+    enum holiday_reference: %w(véspera pós-feriado)
+    enum date_type: %w(fraco forte)
     enum day_of_week: %w(Domingo Segunda Terça Quarta Quinta Sexta Sábado)
   end
 
@@ -19,6 +19,18 @@ module PlanHolidays
     result << holiday_reference if holiday_reference
     result << date_type if date_type
     result
+  end
+
+  def wday_to_i
+    Plan.day_of_weeks[day_of_week]
+  end
+
+  def date_type_to_i
+    Plan.date_types[date_type]
+  end
+
+  def holiday_ref_to_i
+    Plan.holiday_references[holiday_reference]
   end
 
   private

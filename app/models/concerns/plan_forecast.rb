@@ -2,60 +2,51 @@ module PlanForecast
   extend ActiveSupport::Concern
 
   def similar_plans
-    result = []
-    result << last_similar << last_last_similar << average_similar
-    # result + important_similar if important?
+    return regular_similar.sort_by &:date unless important?
+    build_important.sort_by &:date
   end
 
   private
-  def last_similar
-    plan = find_similar(7)
-    format_similar plan, plan.date
-  end
-
-  def last_last_similar
-    plan = find_similar(14)
-    format_similar plan, plan.date
-  end
-
-  def average_similar
-    result_hash = {}
-    station.tanks.each { |tank| result_hash[tank.gasoline] = 0 }
-    dates = [date_ago(7), date_ago(14), date_ago(21), date_ago(28), date_ago(35)]
-
-    Plan.where(date: dates, station: station).each do |plan|
-      plan.measures.each do |measure|
-        result_hash[measure.tank.gasoline] += measure.sell_volume
-        puts result_hash[measure.tank.gasoline]
-        puts measure.sell_volume
-      end
+  def build_important
+    if holiday
+      result = holiday_similar
+    elsif holiday_reference
+      result = holiday_references_similar
+    else
+      result = date_type_similar
     end
-
-    result = ['Média 5', '']
-    result_hash.each do |key, value|
-      result << value / 5
-    end
-    result
+    result + regular_similar(2)
   end
 
-  def important_similar
-
+  def regular_similar(limit = 4)
+    puts day_of_week
+    puts wday_to_i
+    Plan.where(station: station,
+               finished: true,
+               day_of_week: wday_to_i,
+               date_type: nil,
+               holiday_reference: nil,
+               holiday: nil).order('date DESC').limit(limit)
   end
 
-  def find_similar(days_ago)
-    search_date = date_ago(days_ago)
-    Plan.find_by(date: search_date, station: station)
+  def holiday_similar
+    Plan.where.not(holiday: nil).where(station: station,
+                                       finished: true,
+                                       day_of_week: wday_to_i).order('date DESC').limit(4)
   end
 
-  def format_similar(plan, description)
-    result = [description, plan.events.join(', ')]
-    plan.measures.each do |measure|
-      result << measure.sell_volume
-    end
-    result
+  def date_type_similar
+    Plan.where(station: station,
+               finished: true,
+               date_type: date_type_to_i,
+               holiday: nil).order('date DESC').limit(4)
   end
 
-  def date_ago(days_ago)
-    date - days_ago.days
+  def holiday_references_similar
+    Plan.where(station: station,
+               finished: true,
+               holiday_reference: holiday_ref_to_i,
+               day_of_week: wday_to_i,
+               holiday: nil).order('date DESC').limit(4)
   end
 end

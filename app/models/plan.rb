@@ -24,6 +24,14 @@ class Plan < ActiveRecord::Base
     where(finished: false).order('station_id, date')
   end
 
+  def self.last_of_kind(limit)
+    order('date DESC').limit(limit)
+  end
+
+  def self.similars(station)
+    where(station: station, day_of_week: day_of_week)
+  end
+
   def important?
     date_type || holiday || holiday_reference
   end

@@ -7,7 +7,7 @@ module ApplicationHelper
   end
 
   def format_small(number)
-    return l number, format: :default if number.is_a? Date
+    return l number, format: :short if number.is_a? Date
     format number
   end
 
