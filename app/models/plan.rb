@@ -35,4 +35,8 @@ class Plan < ActiveRecord::Base
   def important?
     date_type || holiday || holiday_reference
   end
+
+  def cached_measures
+    Rails.cache.fetch([self.class.name, id, :measures], expires_in: 240.hours) { measures.to_a }
+  end
 end

@@ -15,7 +15,7 @@
       <tr>
         <td>Estoque Inicial</td>
         <% @plan.measures_hash[:initial_volume].each do |volume| %>
-          <td><%= format_real volume %></td>
+          <td><%= format_real volume[0] %></td>
         <% end %>
       </tr>
       <tr>

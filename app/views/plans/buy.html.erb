@@ -28,7 +28,7 @@
             <tr>
               <td>Estoque Inicial</td>
               <% plan.measures_hash[:initial_volume].each do |volume| %>
-                <td><%= format volume %></td>
+                <td class="<%= volume[1] %>"><%= format volume[0] %></td>
               <% end %>
             </tr>
 
@@ -51,7 +51,7 @@
             <tr>
               <td>Estoque Final</td>
               <% plan.measures_hash[:forecast_final_volume].each do |volume| %>
-                <td><%= format volume %></td>
+                <td class="<%= volume[1] %>"><%= format volume[0] %></td>
               <% end %>
             </tr>
             </tbody>

@@ -6,6 +6,8 @@ class Measure < ActiveRecord::Base
   validates_presence_of :plan, :tank
   validates_uniqueness_of :tank, scope: :plan
 
+  after_commit :flush_cache
+
   include MeasuresImport
 
   attr_accessor :initial_volume,
@@ -25,5 +27,14 @@ class Measure < ActiveRecord::Base
 
   def forecast_final_volume
     initial_volume + buy_volume - forecast_volume
+  end
+
+  def cached_tank
+    Rails.cache.fetch([:tank, tank.id], expires_in: 24.hours) { tank }
+  end
+
+  private
+  def flush_cache
+    Rails.cache.delete([self.plan.class.name, self.plan_id, :measures])
   end
 end

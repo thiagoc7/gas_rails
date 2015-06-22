@@ -18,7 +18,7 @@
             <thead>
             <tr>
               <th colspan="2"></th>
-              <% plan.measures.each do |l| %>
+              <% plan.cached_measures.each do |l| %>
                 <th><%= l.tank.gasoline %></th>
               <% end %>
             </tr>
@@ -30,7 +30,7 @@
               <tr>
                 <td><%= format_small s.date %></td>
                 <td><%= events s %></td>
-                <% s.measures.each do |ss| %>
+                <% s.cached_measures.each do |ss| %>
                   <td>
                     <%= format ss.sell_volume %>
                   </td>

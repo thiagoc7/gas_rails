@@ -3,7 +3,6 @@ module PlanMeasures
 
   included do
     after_save :create_measures
-    # attr_accessor :measures_hash
   end
 
   # for self. methods
@@ -17,16 +16,32 @@ module PlanMeasures
   private
   def measures_hash_build
     result = measures_hash_base
-    measures.each do |measure|
-      result[:labels] << measure.tank.gasoline
-      result[:initial_volume] << measure.initial_volume
+    cached_measures.each do |measure|
+      result[:labels] << measure.cached_tank.gasoline
+      result[:initial_volume] << initial_volume_build(measure)
       result[:buy_volume] << measure.buy_volume
       result[:sell_volume] << measure.sell_volume
       result[:forecast_volume] << measure.forecast_volume
       result[:final_volume] << measure.final_volume
-      result[:forecast_final_volume] << measure.forecast_final_volume
+      result[:forecast_final_volume] << forecast_final_volume_build(measure)
     end
     result
+  end
+
+  def initial_volume_build(measure)
+    initial = measure.initial_volume
+    return [0, ''] unless initial
+    class_name = 'light-green-text darken-1'
+    class_name = 'deep-orange-text darken-1' if initial + measure.buy_volume > measure.cached_tank.max_volume
+    [initial, class_name]
+  end
+
+  def forecast_final_volume_build(measure)
+    final = measure.forecast_final_volume
+    # return [0, ''] unless final
+    class_name = 'light-green-text darken-1'
+    class_name = 'deep-orange-text darken-1' if final + measure.buy_volume < measure.cached_tank.min_volume
+    [final, class_name]
   end
 
   def measures_hash_base

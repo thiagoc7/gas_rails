@@ -7,3 +7,32 @@ $nprogress-color: $secondary-color !default;
 //$nprogress-height: 5px;
 //$nprogress-zindex: 10100;
 @import 'nprogress';
+
+
+//animations
+//fade in up
+
+@mixin animate($name, $duration: .3s, $delay: 0, $iterate: 1) {
+  $delay: $delay + '';
+
+  @if (str-index($delay, s) == null) {
+    $delay: unquote($delay + 's');
+  }
+
+  animation: $name $duration $delay $iterate;
+}
+
+.animated {
+  animation-duration: .3s;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.fadeIn {
+  @extend .animated;
+  animation-name: fadeIn;
+}

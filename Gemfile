@@ -32,6 +32,7 @@ group :test do
   gem 'capybara-screenshot'
   gem "selenium-webdriver"
   gem "chromedriver-helper"
+  gem "codeclimate-test-reporter", require: nil
 end
 
 group :development do
