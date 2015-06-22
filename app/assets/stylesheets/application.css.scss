@@ -8,6 +8,14 @@ $nprogress-color: $secondary-color !default;
 //$nprogress-zindex: 10100;
 @import 'nprogress';
 
+//toasts
+.toast-success {
+  background-color: $secondary-color;
+}
+
+.toast-fail {
+  background-color: color("deep-orange", "darken-1");
+}
 
 .important-label {
   background-color: #ff5722 !important;

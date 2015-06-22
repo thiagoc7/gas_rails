@@ -32,7 +32,8 @@ class PlansController < ApplicationController
     @plan = Plan.new(plan_params)
 
     if @plan.save
-      redirect_to plans_url, notice: 'Plan was successfully created.'
+      flash[:success] = "Saved!"
+      redirect_to plans_url
     else
       redirect_to plans_url, notice: 'Fail.'
     end
@@ -40,15 +41,18 @@ class PlansController < ApplicationController
 
   def update
     if @plan.update(calculated_params)
-      redirect_to update_redirect, notice: 'Plan was successfully updated.'
+      flash[:success] = "Updated!"
+      redirect_to update_redirect
     else
-      redirect_to update_redirect, notice: 'Fail.'
+      flash[:fail] = "Fail!"
+      redirect_to update_redirect
     end
   end
 
   def destroy
     @plan.destroy
-    redirect_to plans_url, notice: 'Plan was successfully destroyed.'
+    flash[:fail] = "Destroyed!"
+    redirect_to plans_url
   end
 
   private

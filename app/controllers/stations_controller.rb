@@ -14,23 +14,28 @@ class StationsController < ApplicationController
     @station = Station.new(station_params)
 
     if @station.save
-      redirect_to stations_path, notice: 'Station was successfully created.'
+      flash[:success] = "Saved!"
+      redirect_to stations_path
     else
-      render :index, notice: 'Could Not Create.'
+      flash[:fail] = "Fail!"
+      render :index
     end
   end
 
   def update
     if @station.update(station_params)
-      redirect_to stations_path, notice: 'Station was successfully updated.'
+      flash[:success] = "Updated!"
+      redirect_to stations_path
     else
+      flash[:fail] = "Fail!"
       render :edit
     end
   end
 
   def destroy
     @station.destroy
-    redirect_to stations_url, notice: 'Station was successfully destroyed.'
+    flash[:fail] = "Destroyed!"
+    redirect_to stations_url
   end
 
   private

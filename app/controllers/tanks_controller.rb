@@ -14,30 +14,36 @@ class TanksController < ApplicationController
 
   def import
     Measure.import(params[:file], params[:station_id], params[:gasoline])
-    redirect_to station_tanks_path, notice: 'Imported'
+    flash[:success] = "Imported!"
+    redirect_to station_tanks_path
   end
 
   def create
     @tank = @station.tanks.create(tank_params)
 
     if @tank.save
-      redirect_to station_tanks_path, notice: 'Tank was successfully created.'
+      flash[:success] = "Saved!"
+      redirect_to station_tanks_path
     else
+      flash[:fail] = "Fail!"
       render :new
     end
   end
 
   def update
     if @tank.update(tank_params)
-      redirect_to station_tanks_path, notice: 'Tank was successfully updated.'
+      flash[:success] = "Updated!"
+      redirect_to station_tanks_path
     else
+      flash[:fail] = "Fail!"
       render :edit
     end
   end
 
   def destroy
     @tank.destroy
-    redirect_to station_tanks_url, notice: 'Tank was successfully destroyed.'
+    flash[:fail] = "Destroyed!"
+    redirect_to station_tanks_url
   end
 
   private
