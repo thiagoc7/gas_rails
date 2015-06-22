@@ -24,3 +24,6 @@ Measure.import('db/measures/S10_outeiro.csv', 2, 'S10')
 Measure.import('db/measures/S500_outeiro.csv', 2, 'S500')
 
 Plan.update_all(finished: true)
+
+User.create(email: 'thiagobocorrea@gmail.com', password: 'thiago00')
+User.create(email: 'dantasbravo@gmail.com', password: 'dantas00')
