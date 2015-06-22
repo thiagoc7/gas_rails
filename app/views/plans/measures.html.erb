@@ -2,41 +2,53 @@
 
 <%= render 'plans/partials/search_form' %>
 
-<% @plans.each do |plan| %>
+<%= cache(cache_key_for_plans(@plans)) do %>
 
-  <div class="card-panel">
-    <%= render 'plans/partials/date_info', plan: plan %>
-    <%= form_for(plan) do |f| %>
-      <%= hidden_field :redirect_to, 'measures' %>
+  <% @plans.each do |plan| %>
 
-      <table>
-        <thead>
-        <tr>
-          <th colspan="1"></th>
-          <% plan.cached_measures.each do |l| %>
-            <th><%= l.cached_tank.gasoline %></th>
-          <% end %>
-        </tr>
-        </thead>
+    <% cache(plan) do %>
 
-        <tbody>
-        <tr>
-          <td>Final Volume</td>
-          <%= f.fields_for :measures do |m| %>
-            <td>
-              <%= m.text_field :final_volume, class: 'money' %>
-            </td>
-          <% end %>
-        </tr>
-        </tbody>
-      </table>
+      <div class="card-panel">
+        <%= render 'plans/partials/date_info', plan: plan %>
+        <%= form_for(plan) do |f| %>
+          <%= hidden_field :redirect_to, 'measures' %>
 
-      <div class="actions">
-        <%= f.submit 'save', class: 'btn' %>
+          <table>
+            <thead>
+            <tr>
+              <th colspan="1"></th>
+              <% plan.cached_measures.each do |l| %>
+                <th><%= l.cached_tank.gasoline %></th>
+              <% end %>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+              <td>Estoque Final - Previsto</td>
+              <% plan.measures_hash[:forecast_final_volume].each do |volume| %>
+                <td><%= format volume[0] %></td>
+              <% end %>
+            </tr>
+            <tr>
+              <td>Estoque Final - Real</td>
+              <%= f.fields_for :measures do |m| %>
+                <td>
+                  <%= m.text_field :final_volume, class: 'money' %>
+                </td>
+              <% end %>
+            </tr>
+            </tbody>
+          </table>
+
+          <div class="actions">
+            <%= f.submit 'save', class: 'btn' %>
+          </div>
+        <% end %>
       </div>
-    <% end %>
-  </div>
 
+    <% end %>
+  <% end %>
 <% end %>
 
 <div class="row">

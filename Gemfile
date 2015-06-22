@@ -15,8 +15,8 @@ gem 'pg'
 gem 'nprogress-rails'
 gem 'dalli'
 gem 'devise'
-# gem 'omniauth'
-# gem "omniauth-google-oauth2"
+gem 'omniauth'
+gem "omniauth-google-oauth2"
 
 group :development, :test do
   gem "bullet"
