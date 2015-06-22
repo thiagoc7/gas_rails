@@ -6,7 +6,7 @@ class PlansController < ApplicationController
     if params[:begin_date] && params[:end_date]
       @plans = Plan.between_dates(params[:begin_date], params[:end_date]).order('date DESC')
     else
-      @plans = Plan.order('date DESC').limit(10)
+      @plans = Plan.includes(:station).order('date DESC').limit(10)
     end
   end
 

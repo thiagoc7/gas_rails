@@ -2,7 +2,7 @@ module MeasuresImport
   extend ActiveSupport::Concern
 
   included do
-    require 'CSV'
+    require 'csv'
   end
 
   # date, final_volume, buy_volume

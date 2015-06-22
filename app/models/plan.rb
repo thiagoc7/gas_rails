@@ -17,11 +17,11 @@ class Plan < ActiveRecord::Base
   end
 
   def self.between_dates(from, to)
-    where(date: from..to)
+    includes(:station).where(date: from..to)
   end
 
   def self.open_plans
-    where(finished: false).order('station_id, date')
+    includes(:station).where(finished: false).order('station_id, date')
   end
 
   def self.last_of_kind(limit)
