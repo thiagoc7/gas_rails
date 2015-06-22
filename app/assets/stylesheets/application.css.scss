@@ -9,6 +9,21 @@ $nprogress-color: $secondary-color !default;
 @import 'nprogress';
 
 
+.important-label {
+  background-color: #ff5722 !important;
+  color: white;
+  border-left-width: 2px;
+  padding: 2px 5px;
+  margin-right: 3px;
+  margin-left: 3px;
+  border-radius: 2px;
+  font-size: 13px;
+}
+
+tbody {
+  font-size: 14px
+}
+
 //animations
 //fade in up
 

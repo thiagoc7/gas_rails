@@ -13,19 +13,19 @@
 
   <div class="input-field">
     <%= f.text_field :gasoline %>
-    <%= f.label :gasoline %><br>
+    <%= f.label :gasoline, class: 'active' %><br>
   </div>
   <div class="input-field">
     <%= f.text_field :capacity %>
-    <%= f.label :capacity %><br>
+    <%= f.label :capacity, class: 'active' %><br>
   </div>
   <div class="input-field">
     <%= f.text_field :min_volume %>
-    <%= f.label :min_volume %><br>
+    <%= f.label :min_volume, class: 'active' %><br>
   </div>
   <div class="input-field">
     <%= f.text_field :max_volume %>
-    <%= f.label :max_volume %><br>
+    <%= f.label :max_volume, class: 'active' %><br>
   </div>
 
   <div class="actions">
@@ -37,7 +37,7 @@
 <h5>Import a CSV File</h5>
 <%= form_tag import_station_tanks_path, multipart: true do %>
   <div class="file-field input-field">
-    <input class="file-path validate" placeholder="import measures" type="text"/>
+    <input class="file-path validate" placeholder="import measures - csv - date, buy_volume, final_volume" type="text"/>
     <div class="btn">
       <span>File</span>
       <%= file_field_tag :file %>

@@ -2,7 +2,7 @@
 
 <h3>Tanks for <%= @station.name %></h3>
 
-<table>
+<table class="hoverable">
   <thead>
     <tr>
       <th>Gasoline</th>
@@ -16,10 +16,10 @@
   <tbody>
     <% @tanks.each do |item| %>
       <tr>
-        <td><%= item.gasoline %></td>
-        <td><%= item.capacity %></td>
-        <td><%= item.min_volume %></td>
-        <td><%= item.max_volume %></td>
+        <td><%= format item.gasoline %></td>
+        <td><%= format item.capacity %></td>
+        <td><%= format item.min_volume %></td>
+        <td><%= format item.max_volume %></td>
         <td><%= link_to 'Edit', edit_station_tank_path(@station, item) %></td>
         <td><%= link_to 'Destroy', [@station, item], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

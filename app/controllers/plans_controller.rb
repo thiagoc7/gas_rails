@@ -39,7 +39,7 @@ class PlansController < ApplicationController
   end
 
   def update
-    if @plan.update(plan_params)
+    if @plan.update(calculated_params)
       redirect_to update_redirect, notice: 'Plan was successfully updated.'
     else
       redirect_to update_redirect, notice: 'Fail.'
@@ -85,7 +85,20 @@ class PlansController < ApplicationController
     def plan_params
       params.require(:plan).permit(:date,
                                    :station_id,
+                                   :finished,
                                    measures_attributes: [:id, :final_volume, :buy_volume, :forecast_volume]
       )
+    end
+
+    def calculated_params
+      result = plan_params
+      result[:measures_attributes].each do |measure|
+        next unless measure[1][:final_volume]
+        if (volume = measure[1][:final_volume]).chr == '='
+          volume[0] = ''
+          measure[1][:final_volume] = volume.split('+').map { |v| v.to_i }.sum
+        end
+      end
+      result
     end
 end
