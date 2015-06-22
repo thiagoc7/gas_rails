@@ -14,6 +14,9 @@ gem 'holidays'
 gem 'pg'
 gem 'nprogress-rails'
 gem 'dalli'
+gem 'devise'
+# gem 'omniauth'
+# gem "omniauth-google-oauth2"
 
 group :development, :test do
   gem "bullet"
@@ -32,7 +35,7 @@ group :test do
   gem 'capybara-screenshot'
   gem "selenium-webdriver"
   gem "chromedriver-helper"
-  gem "codeclimate-test-reporter", require: nil
+  gem "codeclimate-test-reporter", require: false
 end
 
 group :development do
