@@ -35,10 +35,14 @@ group :test do
   gem 'capybara-screenshot'
   gem "selenium-webdriver"
   gem "chromedriver-helper"
-  gem "codeclimate-test-reporter", require: false
+  # gem "codeclimate-test-reporter", require: false
 end
 
 group :development do
   gem 'meta_request'
+end
+
+group :production do
+  gem 'shelly-dependencies'
 end
 

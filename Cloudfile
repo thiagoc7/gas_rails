@@ -1,0 +1,20 @@
+gasoline:
+  ruby_version: 2.2.2
+  environment: production # RAILS_ENV
+  domains:
+    - gasoline.shellyapp.com
+    - pedidos.postooliveira.com.br
+  servers:
+    app1:
+      size: small
+      thin: 2
+      # delayed_job: 1
+      # sidekiq: 1
+      # clockwork: on
+      # whenever: on
+      # elasticsearch: on
+      databases:
+        - postgresql
+        # - mysql
+        # - mongodb
+        # - redis
