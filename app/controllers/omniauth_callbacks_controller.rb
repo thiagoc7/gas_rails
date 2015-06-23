@@ -1,27 +1,12 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
-    omniauth
-  end
-
-  private
-  def omniauth
-    auth = request.env["omniauth.auth"]
-
-    if user_signed_in?
-      current_user.provider = auth.provider
-      current_user.uid = auth.uid
-      current_user.save!
-      sign_in_and_redirect current_user
-      return true
-    end
-
-    @user = User.from_omniauth(auth)
+    @user = User.from_omniauth(request.env["omniauth.auth"])
 
     if @user.persisted?
-      sign_in_and_redirect @user
+      sign_in_and_redirect @user, event: :authentication
+      set_flash_message(:notice, :success, kind: "Google") if is_navigational_format?
     else
-      session["devise.google_oauth2_data"] = request.env["omniauth.auth"]
-      redirect_to new_session_path @user
+      flash[:fail] = "You are NOT alowed"
     end
   end
 end

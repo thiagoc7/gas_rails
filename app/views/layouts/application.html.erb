@@ -8,12 +8,14 @@
 </head>
 <body>
 
-<%= render 'partials/navbar' %>
-
 <% flash.each do |key, value| %>
   <%= javascript_tag do %>
     Materialize.toast('<%= value %>', 3000, '<%= "toast-#{key}" %>');
   <% end %>
+<% end %>
+
+<% if user_signed_in? %>
+  <%= render 'partials/navbar' %>
 <% end %>
 
 <div class="container fadeIn">

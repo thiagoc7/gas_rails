@@ -17,6 +17,16 @@ $nprogress-color: $secondary-color !default;
   background-color: color("deep-orange", "darken-1");
 }
 
+.btn-social {
+  margin-left: 5px;
+}
+
+.login-form {
+  width:400px;
+  margin:0 auto;
+  margin-top:150px;
+}
+
 .important-label {
   background-color: #ff5722 !important;
   color: white;
