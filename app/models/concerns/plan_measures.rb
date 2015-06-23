@@ -24,6 +24,7 @@ module PlanMeasures
       result[:forecast_volume] << measure.forecast_volume
       result[:final_volume] << measure.final_volume
       result[:forecast_final_volume] << forecast_final_volume_build(measure)
+      result[:prices] << measure.prices
     end
     result
   end
@@ -53,6 +54,7 @@ module PlanMeasures
         forecast_volume: [],
         final_volume: [],
         forecast_final_volume: [],
+        prices: []
     }
   end
 

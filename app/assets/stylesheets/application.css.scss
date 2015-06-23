@@ -48,6 +48,15 @@ $nprogress-color: $secondary-color !default;
   font-size: 11px;
 }
 
+.prices-label {
+  font-size: 11px;
+  //background-color: $primary-color;
+  color: $primary-color;
+  border-top-width: 2px;
+  padding: 2px 3px;
+  border-radius: 2px;
+}
+
 tbody {
   font-size: 14px
 }

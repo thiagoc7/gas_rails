@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150623154135) do
+ActiveRecord::Schema.define(version: 20150623192635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,12 +44,31 @@ ActiveRecord::Schema.define(version: 20150623154135) do
 
   add_index "plans", ["station_id"], name: "index_plans_on_station_id", using: :btree
 
+  create_table "prices", force: :cascade do |t|
+    t.string   "gasoline"
+    t.string   "amount"
+    t.integer  "supplier_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "prices", ["supplier_id"], name: "index_prices_on_supplier_id", using: :btree
+
   create_table "stations", force: :cascade do |t|
     t.string   "name"
     t.string   "strong_days"
     t.string   "weak_days"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "suppliers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "contact"
+    t.string   "email"
+    t.string   "phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tanks", force: :cascade do |t|
@@ -88,5 +107,6 @@ ActiveRecord::Schema.define(version: 20150623154135) do
   add_foreign_key "measures", "plans"
   add_foreign_key "measures", "tanks"
   add_foreign_key "plans", "stations"
+  add_foreign_key "prices", "suppliers"
   add_foreign_key "tanks", "stations"
 end

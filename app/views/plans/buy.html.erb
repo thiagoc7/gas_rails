@@ -54,6 +54,17 @@
                 <td class="<%= volume[1] %>"><%= format volume[0] %></td>
               <% end %>
             </tr>
+
+            <tr>
+              <td colspan="1"></td>
+              <% plan.measures_hash[:prices].each do |price| %>
+                <td>
+                  <% price.each do |supplier, amount| %>
+                    <span class="prices-label"><%= supplier %> - <%= amount %></span><br>
+                  <% end %>
+                </td>
+              <% end %>
+            </tr>
             </tbody>
           </table>
 

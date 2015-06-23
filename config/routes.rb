@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :prices
+  resources :suppliers
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   resources :plans do

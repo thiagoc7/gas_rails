@@ -1,0 +1,38 @@
+<%= form_for(@price) do |f| %>
+  <% if @price.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@price.errors.count, "error") %> prohibited this price from being saved:</h2>
+
+      <ul>
+      <% @price.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="field col s4">
+      <%= f.label :gasoline %><br>
+      <%= f.select :gasoline, Tank.all.map(&:gasoline).uniq %>
+    </div>
+    <div class="field col s4">
+      <%= f.label :amount %><br>
+      <%= f.text_field :amount %>
+    </div>
+    <div class="field col s4">
+      <%= f.label :supplier_id %><br>
+      <%= f.select :supplier_id, Supplier.all.collect {|p| [ p.name, p.id ] } %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit nil, class: 'btn' %>
+  </div>
+<% end %>
+
+<%= javascript_tag do %>
+  $( document ).ready(function() {
+    $('select').material_select();
+  });
+<% end %>

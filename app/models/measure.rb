@@ -33,6 +33,14 @@ class Measure < ActiveRecord::Base
     Rails.cache.fetch([:tank, tank.id], expires_in: 24.hours) { tank }
   end
 
+  def prices
+    result = {}
+    Price.includes(:supplier).where(gasoline: tank.gasoline).each do |price|
+      result[price.supplier.name] = price.amount
+    end
+    result
+  end
+
   private
   def flush_cache
     Rails.cache.delete([self.plan.class.name, self.plan_id, :measures])

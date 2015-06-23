@@ -17,6 +17,7 @@ gem 'dalli'
 gem 'devise'
 gem 'omniauth'
 gem "omniauth-google-oauth2"
+gem 'active_link_to'
 
 group :development, :test do
   gem "bullet"
