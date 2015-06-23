@@ -20,8 +20,8 @@ class Plan < ActiveRecord::Base
     includes(:station).where(date: from..to)
   end
 
-  def self.open_plans
-    includes(:station).where(finished: false).order('station_id, date')
+  def self.open_plans(date_side = "date > ?")
+    includes(:station).where(finished: false).where(date_side, Date.today).order('station_id, date')
   end
 
   def self.last_of_kind(limit)
@@ -37,6 +37,6 @@ class Plan < ActiveRecord::Base
   end
 
   def cached_measures
-    Rails.cache.fetch([self.class.name, id, :measures], expires_in: 240.hours) { measures.to_a }
+    Rails.cache.fetch([self.class.name, id, :measures], expires_in: 240.hours) { measures.includes(:tank).to_a }
   end
 end

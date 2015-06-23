@@ -1,6 +1,6 @@
 class PlansController < ApplicationController
   before_action :set_plan, only: [:edit, :update, :destroy]
-  before_action :set_plans, only: [:measures, :forecast, :buy]
+  before_action :set_plans, only: [:forecast, :buy]
 
   def index
     if params[:begin_date] && params[:end_date]
@@ -11,6 +11,7 @@ class PlansController < ApplicationController
   end
 
   def measures
+    @plans = Plan.open_plans('date < ?')
     redirect_to forecast_plans_url if @plans.empty?
   end
 

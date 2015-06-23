@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150622213125) do
+ActiveRecord::Schema.define(version: 20150623154135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20150622213125) do
     t.integer  "station_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "number"
   end
 
   add_index "tanks", ["station_id"], name: "index_tanks_on_station_id", using: :btree

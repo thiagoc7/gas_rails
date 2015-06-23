@@ -38,6 +38,16 @@ $nprogress-color: $secondary-color !default;
   font-size: 13px;
 }
 
+.tank-number-label {
+  background-color: $secondary-color;
+  color: white;
+  border-left-width: 2px;
+  padding: 2px 5px;
+  margin-left: 5px;
+  border-radius: 2px;
+  font-size: 11px;
+}
+
 tbody {
   font-size: 14px
 }

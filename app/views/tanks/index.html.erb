@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Gasoline</th>
+      <th>Number</th>
       <th>Capacity</th>
       <th>Min</th>
       <th>Max</th>
@@ -17,6 +18,7 @@
     <% @tanks.each do |item| %>
       <tr>
         <td><%= format item.gasoline %></td>
+        <td><%= format item.number %></td>
         <td><%= format item.capacity %></td>
         <td><%= format item.min_volume %></td>
         <td><%= format item.max_volume %></td>

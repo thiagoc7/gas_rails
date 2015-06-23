@@ -9,7 +9,10 @@
     <% cache(plan) do %>
 
       <div class="card-panel">
-        <%= render 'plans/partials/date_info', plan: plan %>
+        <div class="<%= date_class plan %>">
+          <h5><%= plan.station.name %></h5>
+          <h5>Estoque Inicial em <%= l (plan.date + 1.day) %></h5>
+        </div>
         <%= form_for(plan) do |f| %>
           <%= hidden_field :redirect_to, 'measures' %>
 
@@ -18,20 +21,20 @@
             <tr>
               <th colspan="1"></th>
               <% plan.cached_measures.each do |l| %>
-                <th><%= l.cached_tank.gasoline %></th>
+                <th><%= l.cached_tank.gasoline %><span class="tank-number-label"><%= l.cached_tank.number %></span></th>
               <% end %>
             </tr>
             </thead>
 
             <tbody>
             <tr>
-              <td>Estoque Final - Previsto</td>
+              <td>Previsto</td>
               <% plan.measures_hash[:forecast_final_volume].each do |volume| %>
                 <td><%= format volume[0] %></td>
               <% end %>
             </tr>
             <tr>
-              <td>Estoque Final - Real</td>
+              <td>Real</td>
               <%= f.fields_for :measures do |m| %>
                 <td>
                   <%= m.text_field :final_volume, class: 'money' %>

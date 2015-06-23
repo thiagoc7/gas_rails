@@ -60,6 +60,6 @@ class TanksController < ApplicationController
     end
 
     def tank_params
-      params.require(:tank).permit(:gasoline, :capacity, :min_volume, :max_volume)
+      params.require(:tank).permit(:gasoline, :capacity, :min_volume, :max_volume, :number)
     end
 end
