@@ -50,8 +50,13 @@
             </tbody>
           </table>
 
-          <div class="actions">
-            <%= f.submit 'save', class: 'btn' %>
+          <div class="row actions">
+            <div class="col s2">
+              <%= f.submit 'save', class: 'btn' %>
+            </div>
+            <div class="col s10">
+              <%= f.text_field :obs, placeholder: 'obs' %>
+            </div>
           </div>
         <% end %>
       </div>
