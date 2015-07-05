@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def format_real(number)
-    number_with_delimiter(number, delimiter: ".")
+    number_with_delimiter(number.round, delimiter: ".")
   end
 
   def cache_key_for_plans(plans, suffix = '')

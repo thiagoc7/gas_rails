@@ -1,7 +1,7 @@
 class Measure < ActiveRecord::Base
   belongs_to :plan, touch: true
   belongs_to :tank
-  default_scope { order('tank_id') }
+  default_scope { joins(:tank).order('tanks.gasoline') }
 
   validates_presence_of :plan, :tank
   validates_uniqueness_of :tank, scope: :plan
@@ -38,7 +38,7 @@ class Measure < ActiveRecord::Base
     Price.includes(:supplier).where(gasoline: tank.gasoline).each do |price|
       result[price.supplier.name] = price.amount.gsub(',', '.').to_f * buy_volume
     end
-    result
+    result.sort_by(&:last).to_h
   end
 
   private
