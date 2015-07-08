@@ -90,6 +90,7 @@ class PlansController < ApplicationController
     def plan_params
       params.require(:plan).permit(:date,
                                    :obs,
+                                   :holiday,
                                    :station_id,
                                    :finished,
                                    measures_attributes: [:id, :final_volume, :buy_volume, :forecast_volume]

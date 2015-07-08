@@ -17,7 +17,7 @@ class PricesController < ApplicationController
       redirect_to prices_path
     else
       flash[:fail] = "Fail!"
-      render :new
+      render :index
     end
   end
 
@@ -27,7 +27,7 @@ class PricesController < ApplicationController
       redirect_to prices_path
     else
       flash[:fail] = "Fail!"
-      render :new
+      render :index
     end
   end
 
@@ -47,7 +47,7 @@ class PricesController < ApplicationController
     end
 
   def set_prices
-    @prices = Price.includes(:supplier).all
+    @prices = Price.includes(:supplier).order(:gasoline, :amount)
   end
 
     def price_params
