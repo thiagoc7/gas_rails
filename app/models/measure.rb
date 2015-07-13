@@ -36,7 +36,7 @@ class Measure < ActiveRecord::Base
   def prices
     result = {}
     Price.includes(:supplier).where(gasoline: tank.gasoline).each do |price|
-      result[price.supplier.name] = price.amount.gsub(',', '.').to_i.to_f * buy_volume
+      result[price.supplier.name] = price.amount.gsub(',', '.').to_i.to_f * buy_volume.to_i.to_f
     end
     result.sort_by(&:last).to_h
   end
