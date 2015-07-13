@@ -33,7 +33,7 @@ module PlanMeasures
     initial = measure.initial_volume
     return [0, ''] unless initial
     class_name = 'light-green-text darken-1'
-    class_name = 'deep-orange-text darken-1' if initial.to_i + measure.buy_volume.to_i > measure.cached_tank.max_volume.to_i
+    class_name = 'deep-orange-text darken-1' if initial + measure.buy_volume > measure.cached_tank.max_volume
     [initial, class_name]
   end
 
