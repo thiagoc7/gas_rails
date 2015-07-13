@@ -33,7 +33,7 @@ module PlanMeasures
     initial = measure.initial_volume
     return [0, ''] unless initial
     class_name = 'light-green-text darken-1'
-    class_name = 'deep-orange-text darken-1' if initial + measure.buy_volume > measure.cached_tank.max_volume
+    class_name = 'deep-orange-text darken-1' if initial.to_i + measure.buy_volume.to_i > measure.cached_tank.max_volume.to_i
     [initial, class_name]
   end
 
@@ -41,7 +41,7 @@ module PlanMeasures
     final = measure.forecast_final_volume
     # return [0, ''] unless final
     class_name = 'light-green-text darken-1'
-    class_name = 'deep-orange-text darken-1' if final + measure.buy_volume < measure.cached_tank.min_volume
+    class_name = 'deep-orange-text darken-1' if final.to_i + measure.buy_volume.to_i < measure.cached_tank.min_volume.to_i
     [final, class_name]
   end
 
