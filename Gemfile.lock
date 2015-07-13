@@ -272,6 +272,7 @@ GEM
     rdoc (4.2.0)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
+    rorvswild (0.3.4)
     ruby-progressbar (1.7.5)
     rubyzip (1.1.7)
     sass (3.4.14)
@@ -359,6 +360,7 @@ DEPENDENCIES
   pg
   pry-rails
   rails (= 4.2.1)
+  rorvswild
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   selenium-webdriver

@@ -18,6 +18,7 @@ gem 'devise'
 gem 'omniauth'
 gem "omniauth-google-oauth2"
 gem 'active_link_to'
+gem "rorvswild"
 
 group :development, :test do
   gem "bullet"
