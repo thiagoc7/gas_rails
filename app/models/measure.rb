@@ -26,7 +26,7 @@ class Measure < ActiveRecord::Base
   end
 
   def forecast_final_volume
-    initial_volume + buy_volume - forecast_volume
+    initial_volume.to_i + buy_volume.to_i - forecast_volume.to_i
   end
 
   def cached_tank
