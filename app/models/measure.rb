@@ -19,7 +19,11 @@ class Measure < ActiveRecord::Base
     date = plan.date - 1.day
     yesterday_plan = Plan.where(date: date, station: plan.station).first
     measure = Measure.where(plan: yesterday_plan, tank: tank).first
-    measure ? measure.final_volume || measure.forecast_final_volume : 0
+    if measure then
+      measure.final_volume || measure.forecast_final_volume
+    else
+      0
+    end
   end
 
   def sell_volume
@@ -46,7 +50,6 @@ class Measure < ActiveRecord::Base
 
   def set_default_values
     self.buy_volume ||= 0
-    self.final_volume ||= 0
     self.forecast_volume ||= 0
   end
 
