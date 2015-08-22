@@ -56,7 +56,7 @@ class Measure < ActiveRecord::Base
   def flush_cache
     Rails.cache.delete([self.plan.class.name, self.plan_id, :measures])
 
-    next_plan = Plan.where(date: date + 1.day, station: plan.station).first
+    next_plan = Plan.where(date: plan.date + 1.day, station: plan.station).first
     if next_plan
       Rails.cache.delete([next_plan.class.name, self.plan_id, :measures])
     end
