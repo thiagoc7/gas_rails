@@ -2,84 +2,81 @@
 
 <%= render 'plans/partials/search_form' %>
 
-<%= cache(cache_key_for_plans(@plans)) do %>
+<% @plans.each do |plan| %>
 
-  <% @plans.each do |plan| %>
+  <% cache(plan) do %>
 
-    <% cache(plan) do %>
+    <div class="card-panel">
+      <%= render 'plans/partials/date_info', plan: plan %>
+      <%= form_for(plan) do |f| %>
+        <%= hidden_field :redirect_to, 'buy' %>
 
-      <div class="card-panel">
-        <%= render 'plans/partials/date_info', plan: plan %>
-        <%= form_for(plan) do |f| %>
-          <%= hidden_field :redirect_to, 'buy' %>
+        <table class="hoverable">
+          <thead>
+          <tr>
+            <th colspan="1"></th>
+            <% plan.measures_hash[:labels].each do |label| %>
+              <th><%= label %></th>
+            <% end %>
+          </tr>
+          </thead>
 
-          <table class="hoverable">
-            <thead>
-            <tr>
-              <th colspan="1"></th>
-              <% plan.measures_hash[:labels].each do |label| %>
-                <th><%= label %></th>
-              <% end %>
-            </tr>
-            </thead>
+          <tbody>
 
-            <tbody>
+          <tr>
+            <td>Estoque Inicial</td>
+            <% plan.measures_hash[:initial_volume].each do |volume| %>
+              <td class="<%= volume[1] %>"><%= format volume[0] %></td>
+            <% end %>
+          </tr>
 
-            <tr>
-              <td>Estoque Inicial</td>
-              <% plan.measures_hash[:initial_volume].each do |volume| %>
-                <td class="<%= volume[1] %>"><%= format volume[0] %></td>
-              <% end %>
-            </tr>
+          <tr>
+            <td>Vendas</td>
+            <% plan.measures_hash[:forecast_volume].each do |volume| %>
+              <td><%= format volume %></td>
+            <% end %>
+          </tr>
 
-            <tr>
-              <td>Vendas</td>
-              <% plan.measures_hash[:forecast_volume].each do |volume| %>
-                <td><%= format volume %></td>
-              <% end %>
-            </tr>
+          <tr>
+            <td>Compras</td>
+            <%= f.fields_for :measures do |m| %>
+              <td>
+                <%= m.text_field :buy_volume, class: 'money' %>
+              </td>
+            <% end %>
+          </tr>
 
-            <tr>
-              <td>Compras</td>
-              <%= f.fields_for :measures do |m| %>
-                <td>
-                  <%= m.text_field :buy_volume, class: 'money' %>
-                </td>
-              <% end %>
-            </tr>
+          <tr>
+            <td>Estoque Final</td>
+            <% plan.measures_hash[:forecast_final_volume].each do |volume| %>
+              <td class="<%= volume[1] %>"><%= format volume[0] %></td>
+            <% end %>
+          </tr>
 
-            <tr>
-              <td>Estoque Final</td>
-              <% plan.measures_hash[:forecast_final_volume].each do |volume| %>
-                <td class="<%= volume[1] %>"><%= format volume[0] %></td>
-              <% end %>
-            </tr>
+          <tr>
+            <td colspan="1"></td>
+            <% plan.measures_hash[:prices].each do |price| %>
+              <td>
+                <% price.each do |supplier, amount| %>
+                  <span class="prices-label"><%= supplier %> - <%= format_real amount %></span><br>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+          </tbody>
+        </table>
 
-            <tr>
-              <td colspan="1"></td>
-              <% plan.measures_hash[:prices].each do |price| %>
-                <td>
-                  <% price.each do |supplier, amount| %>
-                    <span class="prices-label"><%= supplier %> - <%= format_real amount %></span><br>
-                  <% end %>
-                </td>
-              <% end %>
-            </tr>
-            </tbody>
-          </table>
-
-          <div class="row actions">
-            <div class="col s2">
-              <%= f.submit 'save', class: 'btn' %>
-            </div>
-            <div class="col s10">
-              <%= f.text_field :obs, placeholder: 'obs' %>
-            </div>
+        <div class="row actions">
+          <div class="col s2">
+            <%= f.submit 'save', class: 'btn' %>
           </div>
-        <% end %>
-      </div>
+          <div class="col s10">
+            <%= f.text_field :obs, placeholder: 'obs' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
 
-    <% end %>
   <% end %>
 <% end %>
 

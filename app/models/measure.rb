@@ -19,7 +19,7 @@ class Measure < ActiveRecord::Base
     date = plan.date - 1.day
     yesterday_plan = Plan.where(date: date, station: plan.station).first
     measure = Measure.where(plan: yesterday_plan, tank: tank).first
-    if measure then
+    if measure
       measure.final_volume || measure.forecast_final_volume
     else
       0
