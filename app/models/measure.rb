@@ -58,7 +58,13 @@ class Measure < ActiveRecord::Base
 
     next_plan = Plan.where(date: plan.date + 1.day, station: plan.station).first
     if next_plan
+      next_plan.touch
+      flush_next_measure(next_plan.id)
       Rails.cache.delete([next_plan.class.name, self.plan_id, :measures])
     end
+  end
+
+  def flush_next_measure(plan_id)
+    Measure.where(plan_id: plan_id, tank_id: tank_id).first.touch
   end
 end
