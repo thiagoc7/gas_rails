@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  amount: 9.99
+  discount: 9.99
+  date: MyString
+  maturity: 2015-09-01
+  days_to_maturity: 1
+  doc_number: MyString
+
+two:
+  amount: 9.99
+  discount: 9.99
+  date: MyString
+  maturity: 2015-09-01
+  days_to_maturity: 1
+  doc_number: MyString

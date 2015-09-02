@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
 
+  resources :banks
+
+  resources :boletos do
+    collection do
+      get :generate
+    end
+  end
+
+  resources :clients
   resources :prices
   resources :suppliers
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
@@ -18,5 +27,6 @@ Rails.application.routes.draw do
     end
   end
 
-  root 'plans#measures'
+  # root 'plans#measures'
+  root 'boletos#index'
 end

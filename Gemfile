@@ -20,6 +20,19 @@ gem "omniauth-google-oauth2"
 gem 'active_link_to'
 gem "rorvswild"
 
+# boleto
+gem "rghost"
+gem "rghost_barcode"
+gem "parseline"
+gem "brcobranca", :git => "git://github.com/kivanio/brcobranca.git", :branch => "master"
+
+# js
+gem 'sprockets', '>= 3.0.0'
+gem 'sprockets-es6'
+gem 'react-rails'
+gem 'maskedinput-rails'
+gem 'momentjs-rails'
+
 group :development, :test do
   gem "bullet"
   gem 'better_errors'
@@ -27,6 +40,8 @@ group :development, :test do
   gem 'jazz_fingers'
   gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'guard-livereload', '~> 2.4', require: false
+  gem "rack-livereload"
   gem 'guard', require: false                   # Guard is a command line tool to easily handle events on file system modifications
   gem 'guard-minitest', require: false          # Guard::Minitest automatically run your tests
 end

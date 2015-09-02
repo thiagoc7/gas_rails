@@ -49,4 +49,6 @@ Rails.application.configure do
     Bullet.rails_logger = true
     # Bullet.growl = true
   end
+
+  config.middleware.insert_after ActionDispatch::Static, Rack::LiveReload
 end

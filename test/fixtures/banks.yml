@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  default_bank: false
+  name: MyString
+  agencia: MyString
+  conta_corrente: MyString
+  variacao: MyString
+  aceite: MyString
+  carteira: MyString
+  convenio: MyString
+
+two:
+  default_bank: false
+  name: MyString
+  agencia: MyString
+  conta_corrente: MyString
+  variacao: MyString
+  aceite: MyString
+  carteira: MyString
+  convenio: MyString
