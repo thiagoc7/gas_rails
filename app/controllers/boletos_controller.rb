@@ -21,11 +21,17 @@ class BoletosController < ApplicationController
   def create
     @boleto = Boleto.new(boleto_params)
 
-    if @boleto.save
-      flash[:success] = "Created!"
-      redirect_to boletos_path
-    else
-      render :new
+    respond_to do |format|
+      if @boleto.save
+        format.html do
+          flash[:success] = "Created!"
+          redirect_to boletos_path
+        end
+        format.json { render :show, status: :created, location: @boleto }
+      else
+        format.html { render :new }
+        format.json { render json: @boleto.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -50,6 +56,6 @@ class BoletosController < ApplicationController
   end
 
   def boleto_params
-    params.require(:boleto).permit(:amount, :discount, :date, :maturity, :days_to_maturity, :doc_number)
+    params.require(:boleto).permit(:amount, :discount, :date, :maturity, :days_to_maturity, :doc_number, :client_id)
   end
 end

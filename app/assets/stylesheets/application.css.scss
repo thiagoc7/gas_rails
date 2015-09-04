@@ -88,3 +88,31 @@ tbody {
   @extend .animated;
   animation-name: fadeIn;
 }
+
+.drop-container {
+  position: relative;
+
+  .drop-popover {
+    display:block;
+    background-color: #F4F4F4;
+    padding: 1em;
+    margin-top: 20px;
+    border-radius: 4px;
+    position:absolute;
+    top:4em;
+    z-index:1;
+    width:200px;
+    color:#333;
+  }
+
+  .drop-popover:before {
+    content:"";
+    position: absolute;
+    left:30px;
+    top: -20px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-bottom: 10px solid #F4F4F4;
+  }
+}

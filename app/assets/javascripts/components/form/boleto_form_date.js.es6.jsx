@@ -25,6 +25,7 @@ var BoletoFormDate = React.createClass({
   _setDate() {
     var newDate = moment(this.state.value, 'DD/MM/YYYY').format('YYYY-MM-DD');
     this.props.handleChange(newDate)
+
   },
 
   render() {

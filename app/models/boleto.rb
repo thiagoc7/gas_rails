@@ -2,6 +2,14 @@ class Boleto < ActiveRecord::Base
   belongs_to :client
   before_save :set_days_to_maturity
 
+  attr_reader :client_name
+
+  validates_presence_of :client, :doc_number, :amount, :discount, :date, :maturity
+
+  def client_name
+    self.client.name
+  end
+
   def to_b
     bank = Bank.where(default_bank: true).first!
 

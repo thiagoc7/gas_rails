@@ -2,11 +2,30 @@ var BoletoPage = React.createClass({
 
   getInitialState() {
     return {
-      boletos: this.props.boletos,
-      clients: this.props.clients
+      boletos: [],
+      clients: []
     }
   },
 
+  componentDidMount() {
+    $.ajax({
+      type: 'get',
+      dataType: "json",
+      url: '/boletos',
+      //data: { boleto: this.state },
+      success: data => this.setState({boletos: data.boletos}),
+      error: error => Materialize.toast(error, 4000)
+    });
+
+    $.ajax({
+      type: 'get',
+      dataType: "json",
+      url: '/clients',
+      //data: { boleto: this.state },
+      success: data => this.setState({clients: data.clients}),
+      error: error => Materialize.toast(error, 4000)
+    });
+  },
 
   render: function() {
     return (
@@ -14,7 +33,7 @@ var BoletoPage = React.createClass({
           <h3>Boletos</h3>
 
           <div className="section">
-            <BoletoForm clients={this.state.clients}/>
+            <BoletoForm clients={this.state.clients} handleNewRecord={this._handleNewRecord}/>
           </div>
           <div className="divider"></div>
 
@@ -29,5 +48,11 @@ var BoletoPage = React.createClass({
 
         </div>
     )
+  },
+
+  _handleNewRecord(data) {
+    var boletos = this.state.boletos;
+    boletos.unshift(data);
+    this.setState({boletos: boletos});
   }
 });

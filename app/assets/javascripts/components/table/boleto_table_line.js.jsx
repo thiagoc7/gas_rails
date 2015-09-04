@@ -3,12 +3,12 @@ var BoletoTableLine = React.createClass({
   render: function() {
     return (
         <tr>
-          <td>01/09/2015</td>
-          <td>15/09/2015</td>
-          <td>2239</td>
-          <td>Thiago Correa</td>
-          <td>3.445,98</td>
-          <td>222,34</td>
+          <td>{this.props.boleto.date}</td>
+          <td>{this.props.boleto.maturity}</td>
+          <td>{this.props.boleto.doc_number}</td>
+          <td>{this.props.boleto.client}</td>
+          <td>{this.props.boleto.amount}</td>
+          <td>{this.props.boleto.discount}</td>
           <td>
             <i className="tiny material-icons">print</i>
             <i className="tiny material-icons">loop</i>
