@@ -4,6 +4,9 @@ var BoletoForm = React.createClass({
     return {
       client_id: null,
       doc_number: null,
+      createClientText: null,
+      isModalOpen: false,
+      clients: [{id: 1, name: 'abc'}, {id: 2, name: 'bcd'}],
       date: moment().format('YYYY-MM-DD'),
       maturity: moment().add(15, 'days').format('YYYY-MM-DD'),
       amount: 0.00,
@@ -46,56 +49,64 @@ var BoletoForm = React.createClass({
 
   render: function() {
     return (
-        <form onSubmit={this._handleSubmit}>
+        <div>
+          <form onSubmit={this._handleSubmit}>
 
-          <div className="row">
+            <div className="row">
 
-            <div className="field col s3">
-              <BoletoFormDrop
-                  label="Clientes"
-                  clients={[{id: 1, name: 'abc'}, {id: 2, name: 'bcd'}, {id: 3, name: 'cde'}]}
-                  value={this.state.client_id}
-                  onChange={this._handleClientChange}
-                  onCreate={this._handleClientCreate}
-                  />
+              <div className="field col s3">
+                <BoletoFormDrop
+                    label="Clientes"
+                    clients={this.state.clients}
+                    value={this.state.client_id}
+                    onChange={this._handleClientChange}
+                    onCreate={this._handleClientCreateText}
+                    />
+              </div>
+
+              <div className="field col s3">
+                <label>NF</label>
+                <input type="text" ref="nf" value={this.state.doc_number} onChange={this._handleNFChange} />
+              </div>
+
+              <div className="field col s3">
+                <label>Valor</label>
+                <BoletoFormMoney value={this.state.amount} onChange={this._handleValorChange}/>
+              </div>
+
+              <div className="field col s3">
+                <label>Desconto</label>
+                <BoletoFormMoney value={this.state.discount} onChange={this._handleDescontoChange}/>
+              </div>
+
             </div>
 
-            <div className="field col s3">
-              <label>NF</label>
-              <input type="text" value={this.state.doc_number} onChange={this._handleNFChange} />
+            <div className="row">
+
+              <div className="field col s3">
+                <label>Vencimento</label>
+                <BoletoFormDate value={this.state.maturity} handleChange={this._handleVencimentoChange}/>
+              </div>
+
+              <div className="field col s3">
+                <label>Emissão</label>
+                <BoletoFormDate value={this.state.date} handleChange={this._handleEmissaoChange}/>
+              </div>
+
+              <div className="actions col offset-s3 s3">
+                <button type="submit" className="btn waves-effect waves-light" disabled={!this._valid()}>Gravar</button>
+              </div>
+
             </div>
 
-            <div className="field col s3">
-              <label>Valor</label>
-              <BoletoFormMoney value={this.state.amount} onChange={this._handleValorChange}/>
-            </div>
+          </form>
 
-            <div className="field col s3">
-              <label>Desconto</label>
-              <BoletoFormMoney value={this.state.discount} onChange={this._handleDescontoChange}/>
-            </div>
-
-          </div>
-
-          <div className="row">
-
-            <div className="field col s3">
-              <label>Vencimento</label>
-              <BoletoFormDate value={this.state.maturity} handleChange={this._handleVencimentoChange}/>
-            </div>
-
-            <div className="field col s3">
-              <label>Emissão</label>
-              <BoletoFormDate value={this.state.date} handleChange={this._handleEmissaoChange}/>
-            </div>
-
-            <div className="actions col offset-s3 s3">
-              <button type="submit" className="btn waves-effect waves-light" disabled={!this._valid()}>Gravar</button>
-            </div>
-
-          </div>
-
-        </form>
+          <BoletoFormModal
+              initialText={this.state.createClientText}
+              isOpen={this.state.isModalOpen}
+              onCreate={this._handleClientCreate}
+              />
+        </div>
     )
   },
 
@@ -132,8 +143,20 @@ var BoletoForm = React.createClass({
     this.setState({discount: newValue});
   },
 
-  _handleClientCreate(text) {
-    alert(text);
-    this.setState({client_id: 1});
+  _handleClientCreateText(text) {
+    this.setState({
+      createClientText: text,
+      client_id: null
+    });
+  },
+
+  _handleClientCreate(client) {
+    var clients = this.state.clients;
+    clients.unshift(client);
+    this.setState({
+      clients: clients,
+      client_id: client.id
+    });
+    React.findDOMNode(this.refs.nf).focus();
   }
 });

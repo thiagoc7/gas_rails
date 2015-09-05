@@ -25,13 +25,21 @@ var BoletoFormDrop = React.createClass({
     this._setCurrentIndex(nextProps.value);
   },
 
+  //focus after submit
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.value === null && (prevProps.value !== null)) {
+      React.findDOMNode(this.refs.input).focus();
+    }
+  },
+
   render() {
     return (
         <div className="drop-container">
           <label>{this.props.label}</label>
-          <BoletoFormDropInput
+          <input
               type="text"
-              inputValue={this.state.inputValue}
+              ref="input"
+              value={this.state.inputValue}
               onChange={this._handleInputChange}
               onFocus={this._onInputFocus}
               onBlur={this._onInputBlur}
@@ -146,7 +154,7 @@ var BoletoFormDrop = React.createClass({
       this.setState({
         clients: clients,
         currentIndex: index,
-        inputValue: clients[index].name
+        inputValue: clients[index] ? clients[index].name : ''
       })
     }
   },

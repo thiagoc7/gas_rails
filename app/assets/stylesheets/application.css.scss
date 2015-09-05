@@ -91,6 +91,7 @@ tbody {
 
 .drop-container {
   position: relative;
+  display: block;
 
   .drop-popover {
     display:block;
@@ -103,6 +104,23 @@ tbody {
     z-index:1;
     width:200px;
     color:#333;
+
+    ul {
+      max-height: 300px;
+      display: block;
+      overflow-y: auto;
+
+      li {
+        padding: 0.5rem;
+        display: block;
+        cursor: pointer;
+
+        &.active {
+          background-color: darkslategrey;
+          color: whitesmoke;
+        }
+      }
+    }
   }
 
   .drop-popover:before {
@@ -115,4 +133,26 @@ tbody {
     border: 10px solid transparent;
     border-bottom: 10px solid #F4F4F4;
   }
+}
+
+.modal-anim-enter {
+  opacity: 0.00;
+  transform: scale(0.7);
+  transition: all 0.2s;
+}
+
+.modal-anim-enter.modal-anim-enter-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.modal-anim-leave {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.2s;
+}
+
+.modal-anim-leave.modal-anim-leave-active {
+  opacity: 0.00;
+  transform: scale(0.7);
 }

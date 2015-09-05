@@ -18,7 +18,7 @@ var BoletoFormPopover = React.createClass({
 
   renderItem(obj, index) {
     if (index == this.props.currentIndex) {
-      return <li key={obj.id}>{obj.name} - active</li>
+      return <li className="active" key={obj.id}>{obj.name}</li>
     } else {
       return <li key={obj.id}>{obj.name}</li>
     }
