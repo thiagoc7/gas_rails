@@ -11,11 +11,10 @@ var BoletoFormModal = React.createClass({
     return {
       ref: null,
       name: null,
-      document: null
+      document: null,
+      isOpen: false
     }
   },
-
-  _modal: null,
 
   componentWillReceiveProps: function(nextProps) {
     var textIsNumber = !isNaN(nextProps.initialText);
@@ -26,24 +25,22 @@ var BoletoFormModal = React.createClass({
     }
   },
 
-  componentDidMount: function() {
-    this._modal = $(this.refs.modal.getDOMNode());
-  },
-
   componentDidUpdate(prevProps, prevState) {
     if (this.props.initialText !== prevProps.initialText) {
-      this._modal.openModal();
       React.findDOMNode(this.refs.ref).focus();
+      this.setState({isOpen: true});
     }
   },
 
-  componentWillUnmount: function () {
-    this._modal.closeModal();
-  },
-
   render() {
+    var modalStyles = {
+      zIndex: 1003,
+      display: this.state.isOpen ? 'block' : 'none',
+      top: 150
+    };
+
     return (
-        <div className="modal" ref="modal">
+        <div className="modal" ref="modal" style={modalStyles}>
 
           <form onSubmit={this._handleSubmit}>
 
@@ -80,8 +77,14 @@ var BoletoFormModal = React.createClass({
             </div>
 
             <div className="modal-footer row">
+              <div className="actions col s3">
+                <a className="waves-effect waves-teal btn-flat"
+                   onClick={() => this.setState({isOpen: false})}>
+                  Cancelar
+                </a>
+              </div>
 
-              <div className="actions col offset-s3 s3">
+              <div className="actions col s3">
                 <button type="submit" className="btn waves-effect waves-light" disabled={!this._valid()}>Gravar</button>
               </div>
 
@@ -107,13 +110,12 @@ var BoletoFormModal = React.createClass({
 
   _submitSuccess(data) {
     this.setState({
-      client_id: null,
-      doc_number: null,
-      amount: undefined,
-      discount: undefined
+      ref: null,
+      name: null,
+      document: null,
+      isOpen: false
     });
 
-    this._modal.closeModal();
     Materialize.toast('salvo!', 4000, 'toast-success');
     this.props.onCreate(data);
   },

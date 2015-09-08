@@ -104,6 +104,8 @@ tbody {
     z-index:1;
     width:200px;
     color:#333;
+    overflow: hidden;
+    max-height: 178px;
 
     ul {
       max-height: 300px;

@@ -6,7 +6,7 @@ var BoletoForm = React.createClass({
       doc_number: null,
       createClientText: null,
       isModalOpen: false,
-      clients: [{id: 1, name: 'abc'}, {id: 2, name: 'bcd'}],
+      clients: [{id: 1, name: 'abc'}, {id: 2, name: 'bcd'}, {id: 3, name: 'cde'}, {id: 4, name: 'efg'}, {id: 5, name: 'hij'}, {id: 6, name: 'klm'}, {id: 7, name: 'bcd'}],
       date: moment().format('YYYY-MM-DD'),
       maturity: moment().add(15, 'days').format('YYYY-MM-DD'),
       amount: 0.00,
