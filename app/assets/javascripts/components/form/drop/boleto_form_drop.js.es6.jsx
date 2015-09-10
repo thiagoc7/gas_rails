@@ -22,7 +22,7 @@ var BoletoFormDrop = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    this._setCurrentIndex(nextProps.value);
+    this._setCurrentIndex(nextProps.value, nextProps.clients);
   },
 
   //focus after submit
@@ -69,7 +69,7 @@ var BoletoFormDrop = React.createClass({
     var clients = this._filterRecords(text);
     var currentIndex = 0;
 
-    if (text.length > 0) { clients.unshift({id: 'CREATE', name: '+ ' + text}) }
+    if (text.length > 0) { clients.unshift({id: 'CREATE', display_name: '+ ' + text}) }
     if (clients.length > 1) {currentIndex = 1}
 
     this.setState({
@@ -85,12 +85,13 @@ var BoletoFormDrop = React.createClass({
 
   _onInputBlur() {
     this._confirmChange();
+    this.setState({isOpen: false})
   },
 
   _confirmChange() {
     var newObj = this.state.clients[this.state.currentIndex];
     this.setState({
-      inputValue: newObj.name,
+      inputValue: newObj.display_name,
       isOpen: false
     });
     this.props.onChange(newObj.id)
@@ -135,33 +136,32 @@ var BoletoFormDrop = React.createClass({
   _confirmChange() {
     var newObj = this.state.clients[this.state.currentIndex];
 
+    if (!newObj) {return;}
+
     if (newObj.id === "CREATE") {
       this.props.onCreate(this.state.inputValue);
       this.setState({isOpen: false})
     } else {
       this.setState({
-        inputValue: newObj.name,
+        inputValue: newObj.display_name,
         isOpen: false
       });
       this.props.onChange(newObj.id)
     }
   },
 
-  _setCurrentIndex(value = this.props.value) {
-    if (this.props.value) {
-      var clients = this.props.clients;
-      var index = clients.map(obj => obj.id).indexOf(value);
-      this.setState({
-        clients: clients,
-        currentIndex: index,
-        inputValue: clients[index] ? clients[index].name : ''
-      })
-    }
+  _setCurrentIndex(value = this.props.value, clients = this.props.clients) {
+    var index = clients.map(obj => obj.id).indexOf(value);
+    this.setState({
+      clients: clients,
+      currentIndex: index,
+      inputValue: clients[index] ? clients[index].display_name : ''
+    })
   },
 
   _filterRecords(text) {
     return this.props.clients.filter(function (record) {
-      return record.name.toLowerCase().indexOf(text.toLowerCase()) >= 0
+      return record.display_name.toLowerCase().indexOf(text.toLowerCase()) >= 0
     })
   }
 });

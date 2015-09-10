@@ -12,17 +12,7 @@ var BoletoPage = React.createClass({
       type: 'get',
       dataType: "json",
       url: '/boletos',
-      //data: { boleto: this.state },
       success: data => this.setState({boletos: data.boletos}),
-      error: error => Materialize.toast(error, 4000)
-    });
-
-    $.ajax({
-      type: 'get',
-      dataType: "json",
-      url: '/clients',
-      //data: { boleto: this.state },
-      success: data => this.setState({clients: data.clients}),
       error: error => Materialize.toast(error, 4000)
     });
   },
@@ -38,12 +28,12 @@ var BoletoPage = React.createClass({
           <div className="divider"></div>
 
           <div className="section">
-            <BoletoFilter />
+            <BoletoFilter clients={this.state.clients} onFilter={this._handleFilter}/>
           </div>
           <div className="divider"></div>
 
           <div className="section">
-            <BoletoTable boletos={this.state.boletos}/>
+            <BoletoTable boletos={this.state.boletos} onDelete={this._handleDelete}/>
           </div>
 
         </div>
@@ -54,5 +44,17 @@ var BoletoPage = React.createClass({
     var boletos = this.state.boletos;
     boletos.unshift(data);
     this.setState({boletos: boletos});
+  },
+
+  _handleDelete(boleto) {
+    var boletos = this.state.boletos.slice();
+    var index = boletos.indexOf(boleto);
+    boletos.splice(index, 1);
+    this.replaceState({boletos: boletos}, () => Materialize.toast('boleto ' + boleto.doc_number + ' apagado', 4000, 'toast-fail'));
+  },
+
+  _handleFilter(result) {
+    this.setState({boletos: result})
   }
+
 });

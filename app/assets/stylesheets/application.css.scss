@@ -102,7 +102,7 @@ tbody {
     position:absolute;
     top:4em;
     z-index:1;
-    width:200px;
+    width:400px;
     color:#333;
     overflow: hidden;
     max-height: 178px;
@@ -137,24 +137,42 @@ tbody {
   }
 }
 
-.modal-anim-enter {
+.modaAnim-enter {
   opacity: 0.00;
   transform: scale(0.7);
   transition: all 0.2s;
 }
 
-.modal-anim-enter.modal-anim-enter-active {
+.modaAnim-enter.modaAnim-enter-active {
   opacity: 1;
   transform: scale(1);
 }
 
-.modal-anim-leave {
+.modaAnim-leave {
   opacity: 1;
   transform: scale(1);
   transition: all 0.2s;
 }
 
-.modal-anim-leave.modal-anim-leave-active {
+.modaAnim-leave.modaAnim-leave-active {
   opacity: 0.00;
   transform: scale(0.7);
+}
+
+.boletoTable-enter {
+  opacity: 0.01;
+}
+
+.boletoTable-enter.boletoTable-enter-active {
+  opacity: 1;
+  transition: opacity .3s ease-in;
+}
+
+.boletoTable-leave {
+  opacity: 1;
+}
+
+.boletoTable-leave.boletoTable-leave-active {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
 }

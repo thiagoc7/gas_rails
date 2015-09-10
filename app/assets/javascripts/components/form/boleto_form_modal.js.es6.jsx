@@ -27,8 +27,9 @@ var BoletoFormModal = React.createClass({
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.initialText !== prevProps.initialText) {
-      React.findDOMNode(this.refs.ref).focus();
-      this.setState({isOpen: true});
+      this.setState({isOpen: true}, function() {
+        React.findDOMNode(this.refs.clientRef).focus()
+      });
     }
   },
 
@@ -36,7 +37,7 @@ var BoletoFormModal = React.createClass({
     var modalStyles = {
       zIndex: 1003,
       display: this.state.isOpen ? 'block' : 'none',
-      top: 150
+      top: 100
     };
 
     return (
@@ -50,7 +51,7 @@ var BoletoFormModal = React.createClass({
                 <label>Ref</label>
                 <input
                     type="text"
-                    ref="ref"
+                    ref="clientRef"
                     value={this.state.ref}
                     onChange={this._handleRefChange}
                     />
@@ -60,6 +61,7 @@ var BoletoFormModal = React.createClass({
                 <label>Nome</label>
                 <input
                     type="text"
+                    ref="clientName"
                     value={this.state.name}
                     onChange={this._handleNameChange}
                     />
@@ -79,7 +81,7 @@ var BoletoFormModal = React.createClass({
             <div className="modal-footer row">
               <div className="actions col s3">
                 <a className="waves-effect waves-teal btn-flat"
-                   onClick={() => this.setState({isOpen: false})}>
+                   onClick={this._handleCancel}>
                   Cancelar
                 </a>
               </div>
@@ -129,6 +131,15 @@ var BoletoFormModal = React.createClass({
     return this.state.ref &&
         this.state.name &&
         this.state.document
+  },
+
+  _handleCancel() {
+    this.setState({
+      ref: null,
+      name: null,
+      document: null,
+      isOpen: false
+    });
   },
 
   _handleRefChange(e) {

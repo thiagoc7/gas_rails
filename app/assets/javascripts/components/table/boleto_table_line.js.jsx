@@ -1,5 +1,21 @@
 var BoletoTableLine = React.createClass({
 
+  propTypes: {
+    boleto: React.PropTypes.object.isRequired,
+    onDelete: React.PropTypes.func.isRequired
+  },
+
+  onDelete(e) {
+    e.preventDefault();
+    $.ajax({
+      type: 'delete',
+      url: "/boletos/" + this.props.boleto.id,
+      dataType: 'json',
+      success: () => this.props.onDelete(this.props.boleto),
+      error: error => console.log(error)
+    });
+  },
+
   render: function() {
     return (
         <tr>
@@ -10,9 +26,12 @@ var BoletoTableLine = React.createClass({
           <td>{this.props.boleto.amount}</td>
           <td>{this.props.boleto.discount}</td>
           <td>
-            <i className="tiny material-icons">print</i>
-            <i className="tiny material-icons">loop</i>
-            <i className="tiny material-icons">delete</i>
+            <a href={"/boletos/generate." + this.props.boleto.id} target="_blank">
+              <i className="tiny material-icons">print</i>
+            </a>
+            <a data-confirm="Are you sure?" rel="nofollow" onClick={this.onDelete} href="#">
+              <i className="tiny material-icons">delete</i>
+            </a>
           </td>
         </tr>
     );

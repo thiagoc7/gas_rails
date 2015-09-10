@@ -6,12 +6,22 @@ var BoletoForm = React.createClass({
       doc_number: null,
       createClientText: null,
       isModalOpen: false,
-      clients: [{id: 1, name: 'abc'}, {id: 2, name: 'bcd'}, {id: 3, name: 'cde'}, {id: 4, name: 'efg'}, {id: 5, name: 'hij'}, {id: 6, name: 'klm'}, {id: 7, name: 'bcd'}],
+      clients: [],
       date: moment().format('YYYY-MM-DD'),
       maturity: moment().add(15, 'days').format('YYYY-MM-DD'),
       amount: 0.00,
       discount: 0.00
     }
+  },
+
+  componentDidMount() {
+    $.ajax({
+      type: 'get',
+      dataType: "json",
+      url: '/clients',
+      success: data => this.setState({clients: data.clients}, () => this.forceUpdate()),
+      error: error => Materialize.toast(error, 4000)
+    });
   },
 
   _handleSubmit(e) {

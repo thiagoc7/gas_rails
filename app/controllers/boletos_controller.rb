@@ -2,8 +2,15 @@ class BoletosController < ApplicationController
   before_action :set_boleto, only: [:show, :edit, :update, :destroy]
 
   def index
-    @clients = Client.all
-    @boletos = Boleto.all
+    if params[:ref] || params[:doc_number] || params[:date_begin] || params[:date_end]
+      @boletos = Boleto.all
+      @boletos = @boletos.joins(:client).where(clients: {ref: params[:ref].to_i}) unless params[:ref].empty?
+      @boletos = @boletos.where(doc_number: params[:doc_number]) unless params[:doc_number].empty?
+      @boletos = @boletos.where('maturity >= :date', date: params["date_begin"]) unless params[:date_begin].empty?
+      @boletos = @boletos.where('maturity <= :date', date: params["date_end"]) unless params[:date_end].empty?
+    else
+      @boletos = Boleto.all
+    end
   end
 
   def new
@@ -46,8 +53,7 @@ class BoletosController < ApplicationController
 
   def destroy
     @boleto.destroy
-    flash[:fail] = "Destroyed!"
-    redirect_to boletos_path
+    head :no_content
   end
 
   private
