@@ -33,7 +33,7 @@ var BoletoPage = React.createClass({
           <div className="divider"></div>
 
           <div className="section">
-            <BoletoTable boletos={this.state.boletos} onDelete={this._handleDelete}/>
+            <BoletoTable boletos={this.state.boletos} onDelete={this._handleDelete} onEdit={this._handleEdit}/>
           </div>
 
         </div>
@@ -51,6 +51,13 @@ var BoletoPage = React.createClass({
     var index = boletos.indexOf(boleto);
     boletos.splice(index, 1);
     this.replaceState({boletos: boletos}, () => Materialize.toast('boleto ' + boleto.doc_number + ' apagado', 4000, 'toast-fail'));
+  },
+
+  _handleEdit(newBoleto, oldBoleto) {
+    var boletos = this.state.boletos;
+    var index = boletos.indexOf(oldBoleto);
+    boletos = React.addons.update(boletos, { $splice: [[index, 1, newBoleto]] });
+    this.replaceState({boletos: boletos}, () => Materialize.toast('boleto ' + newBoleto.doc_number + ' atualizado', 4000));
   },
 
   _handleFilter(result) {

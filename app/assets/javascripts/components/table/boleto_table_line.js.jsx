@@ -19,12 +19,12 @@ var BoletoTableLine = React.createClass({
   render: function() {
     return (
         <tr>
-          <td>{this.props.boleto.date}</td>
-          <td>{this.props.boleto.maturity}</td>
+          <BoletoTableCellEditDate value={this.props.boleto.date} onEdit={this.onEdit} prop={"date"} />
+          <BoletoTableCellEditDate value={this.props.boleto.maturity} onEdit={this.onEdit} prop={"maturity"} />
           <td>{this.props.boleto.doc_number}</td>
           <td>{this.props.boleto.client}</td>
-          <td>{this.props.boleto.amount}</td>
-          <td>{this.props.boleto.discount}</td>
+          <BoletoTableCellEditNumber value={parseFloat(this.props.boleto.amount).toFixed(2)} onEdit={this.onEdit} prop={"amount"} />
+          <BoletoTableCellEditNumber value={parseFloat(this.props.boleto.discount).toFixed(2)} onEdit={this.onEdit} prop={"discount"} />
           <td>
             <a href={"/boletos/generate." + this.props.boleto.id} target="_blank">
               <i className="tiny material-icons">print</i>
@@ -35,5 +35,21 @@ var BoletoTableLine = React.createClass({
           </td>
         </tr>
     );
+  },
+
+  onEdit(newData) {
+    $.ajax({
+      type: 'put',
+      dataType: "json",
+      url: '/boletos/' + this.props.boleto.id,
+      data: {boleto: newData},
+      success: data => this.props.onEdit(data, this.props.boleto),
+      error: error => Materialize.toast('falhou! ' + error, 4000, 'toast-fail')
+    });
+  },
+
+  formatNumber(number) {
+    var newNumber = number.replace(/\./g, ',');
+    return newNumber.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 });

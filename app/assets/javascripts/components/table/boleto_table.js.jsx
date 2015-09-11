@@ -2,7 +2,8 @@ var BoletoTable = React.createClass({
 
   propTypes: {
     boletos: React.PropTypes.array.isRequired,
-    onDelete: React.PropTypes.func.isRequired
+    onDelete: React.PropTypes.func.isRequired,
+    onEdit: React.PropTypes.func.isRequired
   },
 
   render: function() {
@@ -38,7 +39,7 @@ var BoletoTable = React.createClass({
 
             {this.props.boletos.map(boleto =>
                     <ReactCSSTransitionGroup transitionName="boletoTable" component="tbody" key={boleto.id}>
-                      <BoletoTableLine boleto={boleto} key={boleto.id} onDelete={this.props.onDelete}/>
+                      <BoletoTableLine boleto={boleto} key={boleto.id} onDelete={this.props.onDelete} onEdit={this.props.onEdit}/>
                     </ReactCSSTransitionGroup>
             )}
 

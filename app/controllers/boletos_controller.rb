@@ -8,6 +8,8 @@ class BoletosController < ApplicationController
       @boletos = @boletos.where(doc_number: params[:doc_number]) unless params[:doc_number].empty?
       @boletos = @boletos.where('maturity >= :date', date: params["date_begin"]) unless params[:date_begin].empty?
       @boletos = @boletos.where('maturity <= :date', date: params["date_end"]) unless params[:date_end].empty?
+    else
+      @boletos = Boleto.all
     end
   end
 
@@ -50,11 +52,17 @@ class BoletosController < ApplicationController
   end
 
   def update
-    if @boleto.update(boleto_params)
-      flash[:success] = "Updated!"
-      redirect_to boletos_path
-    else
-      render :edit
+    respond_to do |format|
+      if @boleto.update(boleto_params)
+        format.html do
+          flash[:success] = "Updated!"
+          redirect_to boletos_path
+        end
+        format.json { render :show, status: :created, location: @boleto }
+      else
+        format.html { render :index }
+        format.json { render json: @boleto.errors, status: :unprocessable_entity }
+      end
     end
   end
 

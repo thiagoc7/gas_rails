@@ -9,8 +9,8 @@ var BoletoForm = React.createClass({
       clients: [],
       date: moment().format('YYYY-MM-DD'),
       maturity: moment().add(15, 'days').format('YYYY-MM-DD'),
-      amount: 0.00,
-      discount: 0.00
+      amount: null,
+      discount: null
     }
   },
 
@@ -41,8 +41,8 @@ var BoletoForm = React.createClass({
     this.setState({
       client_id: null,
       doc_number: null,
-      amount: undefined,
-      discount: undefined
+      amount: null,
+      discount: null
     });
 
     Materialize.toast('salvo!', 4000, 'toast-success');
@@ -81,7 +81,7 @@ var BoletoForm = React.createClass({
 
               <div className="field col s3">
                 <label>Valor</label>
-                <BoletoFormMoney value={this.state.amount} onChange={this._handleValorChange}/>
+                <BoletoFormNumber value={this.state.amount} onChange={this._handleValorChange}/>
               </div>
 
             </div>
@@ -90,17 +90,17 @@ var BoletoForm = React.createClass({
 
               <div className="field col s3">
                 <label>Desconto</label>
-                <BoletoFormMoney value={this.state.discount} onChange={this._handleDescontoChange}/>
+                <BoletoFormNumber value={this.state.discount} onChange={this._handleDescontoChange}/>
               </div>
 
               <div className="field col s3">
                 <label>Vencimento</label>
-                <BoletoFormDate value={this.state.maturity} handleChange={this._handleVencimentoChange}/>
+                <BoletoFormDate value={this.state.maturity} onChange={this._handleVencimentoChange}/>
               </div>
 
               <div className="field col s3">
                 <label>Emissão</label>
-                <BoletoFormDate value={this.state.date} handleChange={this._handleEmissaoChange}/>
+                <BoletoFormDate value={this.state.date} onChange={this._handleEmissaoChange}/>
               </div>
 
               <div className="actions col s3">
