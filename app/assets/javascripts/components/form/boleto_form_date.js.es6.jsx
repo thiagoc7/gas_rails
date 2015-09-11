@@ -6,7 +6,7 @@ var BoletoFormDate = React.createClass({
     var value = undefined;
     if (this.props.value) { value = moment(this.props.value).format('DD/MM/YYYY')}
     return {
-      value: value
+      displayValue: value
     };
   },
 
@@ -19,22 +19,17 @@ var BoletoFormDate = React.createClass({
   },
 
   _handleChange(e) {
-    this.setState({value: e.target.value});
-  },
-
-  _setDate() {
-    var newDate = moment(this.state.value, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    this.setState({displayValue: e.target.value});
+    var newDate = moment(e.target.value, 'DD/MM/YYYY').format('YYYY-MM-DD');
     this.props.handleChange(newDate)
-
   },
 
   render() {
     return <input
         type="text"
         ref="input"
-        value={this.state.value}
+        value={this.state.displayValue}
         onChange={this._handleChange}
-        onBlur={this._setDate}
         />
   }
 });

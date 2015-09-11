@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :boletos do
     collection do
       get :generate
+      get :generate_many
     end
   end
 

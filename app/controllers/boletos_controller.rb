@@ -8,8 +8,6 @@ class BoletosController < ApplicationController
       @boletos = @boletos.where(doc_number: params[:doc_number]) unless params[:doc_number].empty?
       @boletos = @boletos.where('maturity >= :date', date: params["date_begin"]) unless params[:date_begin].empty?
       @boletos = @boletos.where('maturity <= :date', date: params["date_end"]) unless params[:date_end].empty?
-    else
-      @boletos = Boleto.all
     end
   end
 
@@ -20,6 +18,15 @@ class BoletosController < ApplicationController
   def generate
     @boleto = Boleto.find(params[:format])
     send_data @boleto.to_b.to(:pdf), :filename => "boleto_#{params[:format]}.#{:pdf}"
+  end
+
+  def generate_many
+    result = []
+    Boleto.where(id: params[:format].split(',')).each do |boleto|
+      result << boleto.to_b
+    end
+
+    send_data Brcobranca::Boleto::Base.lote(result), filename: "boletos.pdf"
   end
 
   def edit

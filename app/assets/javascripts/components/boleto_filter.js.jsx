@@ -1,7 +1,6 @@
 var BoletoFilter = React.createClass({
 
   propTypes: {
-    clients: React.PropTypes.array.isRequired,
     onFilter: React.PropTypes.func.isRequired
   },
 

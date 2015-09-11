@@ -64,9 +64,9 @@ var BoletoForm = React.createClass({
 
             <div className="row">
 
-              <div className="field col s3">
+              <div className="field col s6">
                 <BoletoFormDrop
-                    label="Clientes"
+                    label="Cliente"
                     clients={this.state.clients}
                     value={this.state.client_id}
                     onChange={this._handleClientChange}
@@ -84,14 +84,14 @@ var BoletoForm = React.createClass({
                 <BoletoFormMoney value={this.state.amount} onChange={this._handleValorChange}/>
               </div>
 
+            </div>
+
+            <div className="row">
+
               <div className="field col s3">
                 <label>Desconto</label>
                 <BoletoFormMoney value={this.state.discount} onChange={this._handleDescontoChange}/>
               </div>
-
-            </div>
-
-            <div className="row">
 
               <div className="field col s3">
                 <label>Vencimento</label>
@@ -103,7 +103,7 @@ var BoletoForm = React.createClass({
                 <BoletoFormDate value={this.state.date} handleChange={this._handleEmissaoChange}/>
               </div>
 
-              <div className="actions col offset-s3 s3">
+              <div className="actions col s3">
                 <button type="submit" className="btn waves-effect waves-light" disabled={!this._valid()}>Gravar</button>
               </div>
 
