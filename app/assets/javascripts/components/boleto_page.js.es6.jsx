@@ -2,8 +2,7 @@ var BoletoPage = React.createClass({
 
   getInitialState() {
     return {
-      boletos: [],
-      clients: []
+      boletos: []
     }
   },
 
@@ -23,12 +22,14 @@ var BoletoPage = React.createClass({
           <h3>Boletos</h3>
 
           <div className="section">
-            <BoletoForm clients={this.state.clients} handleNewRecord={this._handleNewRecord}/>
+            <BoletoForm handleNewRecord={this._handleNewRecord}/>
           </div>
           <div className="divider"></div>
 
           <div className="section">
-            <BoletoFilter clients={this.state.clients} onFilter={this._handleFilter}/>
+            <BoletoFilter
+                clients={this.state.clients}
+                onFilter={result => this.setState({boletos: result})}/>
           </div>
           <div className="divider"></div>
 
@@ -58,10 +59,5 @@ var BoletoPage = React.createClass({
     var index = boletos.indexOf(oldBoleto);
     boletos = React.addons.update(boletos, { $splice: [[index, 1, newBoleto]] });
     this.replaceState({boletos: boletos}, () => Materialize.toast('boleto ' + newBoleto.doc_number + ' atualizado', 4000));
-  },
-
-  _handleFilter(result) {
-    this.setState({boletos: result})
   }
-
 });

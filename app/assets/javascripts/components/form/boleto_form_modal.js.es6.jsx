@@ -53,7 +53,7 @@ var BoletoFormModal = React.createClass({
                     type="text"
                     ref="clientRef"
                     value={this.state.ref}
-                    onChange={this._handleRefChange}
+                    onChange={e => this.setState({ref: e.target.value})}
                     />
               </div>
 
@@ -63,7 +63,7 @@ var BoletoFormModal = React.createClass({
                     type="text"
                     ref="clientName"
                     value={this.state.name}
-                    onChange={this._handleNameChange}
+                    onChange={e => this.setState({name: e.target.value})}
                     />
               </div>
 
@@ -72,7 +72,7 @@ var BoletoFormModal = React.createClass({
                 <input
                     type="text"
                     value={this.state.document}
-                    onChange={this._handleDocChange}
+                    onChange={e => this.setState({document: e.target.value})}
                     />
               </div>
 
@@ -140,18 +140,5 @@ var BoletoFormModal = React.createClass({
       document: null,
       isOpen: false
     });
-  },
-
-  _handleRefChange(e) {
-    this.setState({ref: e.target.value});
-  },
-
-  _handleNameChange(e) {
-    this.setState({name: e.target.value});
-  },
-
-  _handleDocChange(e) {
-    this.setState({document: e.target.value});
   }
-
 });

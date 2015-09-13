@@ -1,5 +1,9 @@
 var BoletoForm = React.createClass({
 
+  propTypes: {
+    handleNewRecord: React.PropTypes.func.isRequired
+  },
+
   getInitialState() {
     return {
       client_id: null,
@@ -23,6 +27,94 @@ var BoletoForm = React.createClass({
       error: error => Materialize.toast(error, 4000)
     });
   },
+
+  render: function() {
+    return (
+        <div>
+          <form onSubmit={this._handleSubmit}>
+
+            <div className="row">
+
+              <div className="field col s6">
+                <BoletoFormDrop
+                    label="Cliente"
+                    clients={this.state.clients}
+                    value={this.state.client_id}
+                    onChange={newClient => this.setState({client_id: newClient})}
+                    onCreate={text => this.setState({createClientText: text, client_id: null})}
+                    />
+              </div>
+
+              <div className="field col s3">
+                <label>NF</label>
+                <input type="text" ref="nf"
+                       value={this.state.doc_number}
+                       onChange={e => this.setState({doc_number: e.target.value})}
+                    />
+              </div>
+
+              <div className="field col s3">
+                <label>Valor</label>
+                <BoletoFormNumber
+                    value={this.state.amount}
+                    onChange={newValue => this.setState({amount: newValue})}
+                    />
+              </div>
+
+            </div>
+
+            <div className="row">
+
+              <div className="field col s3">
+                <label>Desconto</label>
+                <BoletoFormNumber
+                    value={this.state.discount}
+                    onChange={newValue => this.setState({discount: newValue})}
+                    />
+              </div>
+
+              <div className="field col s3">
+                <label>Vencimento</label>
+                <BoletoFormDate
+                    value={this.state.maturity}
+                    onChange={newDate => this.setState({maturity: newDate})}
+                    />
+              </div>
+
+              <div className="field col s3">
+                <label>Emissão</label>
+                <BoletoFormDate
+                    value={this.state.date}
+                    onChange={newDate => this.setState({date: newDate})}
+                    />
+              </div>
+
+              <div className="actions col s3">
+                <button type="submit" className="btn waves-effect waves-light" disabled={!this._valid()}>Gravar</button>
+              </div>
+
+            </div>
+
+          </form>
+
+          <BoletoFormModal
+              initialText={this.state.createClientText}
+              isOpen={this.state.isModalOpen}
+              onCreate={this._handleClientCreate}
+              />
+        </div>
+    )
+  },
+
+  _valid() {
+    return this.state.client_id &&
+        this.state.doc_number &&
+        this.state.date &&
+        this.state.maturity &&
+        this.state.amount &&
+        this.state.discount
+  },
+
 
   _handleSubmit(e) {
     e.preventDefault();
@@ -53,111 +145,6 @@ var BoletoForm = React.createClass({
   _submitError(error) {
     Materialize.toast('falhou! ' + error, 4000, 'toast-fail');
     console.log(error)
-  },
-
-
-
-  render: function() {
-    return (
-        <div>
-          <form onSubmit={this._handleSubmit}>
-
-            <div className="row">
-
-              <div className="field col s6">
-                <BoletoFormDrop
-                    label="Cliente"
-                    clients={this.state.clients}
-                    value={this.state.client_id}
-                    onChange={this._handleClientChange}
-                    onCreate={this._handleClientCreateText}
-                    />
-              </div>
-
-              <div className="field col s3">
-                <label>NF</label>
-                <input type="text" ref="nf" value={this.state.doc_number} onChange={this._handleNFChange} />
-              </div>
-
-              <div className="field col s3">
-                <label>Valor</label>
-                <BoletoFormNumber value={this.state.amount} onChange={this._handleValorChange}/>
-              </div>
-
-            </div>
-
-            <div className="row">
-
-              <div className="field col s3">
-                <label>Desconto</label>
-                <BoletoFormNumber value={this.state.discount} onChange={this._handleDescontoChange}/>
-              </div>
-
-              <div className="field col s3">
-                <label>Vencimento</label>
-                <BoletoFormDate value={this.state.maturity} onChange={this._handleVencimentoChange}/>
-              </div>
-
-              <div className="field col s3">
-                <label>Emissão</label>
-                <BoletoFormDate value={this.state.date} onChange={this._handleEmissaoChange}/>
-              </div>
-
-              <div className="actions col s3">
-                <button type="submit" className="btn waves-effect waves-light" disabled={!this._valid()}>Gravar</button>
-              </div>
-
-            </div>
-
-          </form>
-
-          <BoletoFormModal
-              initialText={this.state.createClientText}
-              isOpen={this.state.isModalOpen}
-              onCreate={this._handleClientCreate}
-              />
-        </div>
-    )
-  },
-
-  _valid() {
-    return this.state.client_id &&
-        this.state.doc_number &&
-        this.state.date &&
-        this.state.maturity &&
-        this.state.amount &&
-        this.state.discount
-  },
-
-  _handleClientChange(newClient) {
-    this.setState({client_id: newClient});
-  },
-
-  _handleNFChange(e) {
-    this.setState({doc_number: e.target.value});
-  },
-
-  _handleEmissaoChange(newDate) {
-    this.setState({date: newDate});
-  },
-
-  _handleVencimentoChange(newDate) {
-    this.setState({maturity: newDate});
-  },
-
-  _handleValorChange(newValue) {
-    this.setState({amount: newValue});
-  },
-
-  _handleDescontoChange(newValue) {
-    this.setState({discount: newValue});
-  },
-
-  _handleClientCreateText(text) {
-    this.setState({
-      createClientText: text,
-      client_id: null
-    });
   },
 
   _handleClientCreate(client) {

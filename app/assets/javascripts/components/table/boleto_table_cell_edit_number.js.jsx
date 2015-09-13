@@ -13,12 +13,17 @@ var BoletoTableCellEditNumber = React.createClass({
     }
   },
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({newValue: nextProps.value})
+  },
+
   render: function() {
     var style = {
       padding: 0,
       height: 25,
       margin: 0,
-      border: 0
+      border: 0,
+      width: 80
     };
 
     if (this.state.isEditing) {

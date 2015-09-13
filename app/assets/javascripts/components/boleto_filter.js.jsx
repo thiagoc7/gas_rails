@@ -55,7 +55,7 @@ var BoletoFilter = React.createClass({
                 <label>Venc Inicial</label>
                 <BoletoFormDate
                     value={this.state.date_begin}
-                    handleChange={(newDate) => this.setState({date_begin: newDate})}
+                    onChange={(newDate) => this.setState({date_begin: newDate})}
                     />
               </div>
 
@@ -63,7 +63,7 @@ var BoletoFilter = React.createClass({
                 <label>Venc Final</label>
                 <BoletoFormDate
                     value={this.state.date_end}
-                    handleChange={(newDate) => this.setState({date_end: newDate})}
+                    onChange={(newDate) => this.setState({date_end: newDate})}
                     />
               </div>
 
