@@ -18,15 +18,19 @@ ActiveRecord::Schema.define(version: 20150901125818) do
 
   create_table "banks", force: :cascade do |t|
     t.string   "name"
+    t.string   "cedente"
+    t.string   "cedente_doc"
+    t.string   "cedente_address"
     t.string   "agencia"
     t.string   "conta_corrente"
     t.string   "variacao"
-    t.string   "aceite",         default: "N"
+    t.string   "aceite",          default: "N"
     t.string   "carteira"
     t.string   "convenio"
-    t.boolean  "default_bank"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.string   "instrucao_juros"
+    t.boolean  "default_bank",    default: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   create_table "boletos", force: :cascade do |t|
@@ -47,6 +51,7 @@ ActiveRecord::Schema.define(version: 20150901125818) do
   create_table "clients", force: :cascade do |t|
     t.string   "name"
     t.string   "document"
+    t.string   "address"
     t.integer  "ref"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

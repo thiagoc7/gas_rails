@@ -6,13 +6,17 @@ class Bank < ActiveRecord::Base
   def to_h
     result = {}
 
+    result[:cedente] = cedente
+    result[:documento_cedente] = cedente_doc
+    result[:cedente_endereco] = cedente_address if cedente_address.present?
+
     result[:agencia] = agencia
     result[:conta_corrente] = conta_corrente
     result[:aceite] = aceite
 
-    result[:variacao] = variacao unless variacao.empty?
-    result[:carteira] = carteira unless carteira.empty?
-    result[:convenio] = convenio.to_i unless convenio.empty?
+    result[:variacao] = variacao if variacao.present?
+    result[:carteira] = carteira if carteira.present?
+    result[:convenio] = convenio.to_i if convenio.present?
 
     result
   end

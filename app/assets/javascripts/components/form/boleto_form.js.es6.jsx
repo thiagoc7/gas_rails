@@ -111,8 +111,7 @@ var BoletoForm = React.createClass({
         this.state.doc_number &&
         this.state.date &&
         this.state.maturity &&
-        this.state.amount &&
-        this.state.discount
+        this.state.amount
   },
 
 

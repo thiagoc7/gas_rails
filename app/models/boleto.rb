@@ -2,22 +2,21 @@ class Boleto < ActiveRecord::Base
   belongs_to :client
   before_save :set_days_to_maturity
 
-  attr_reader :client_name
-
-  validates_presence_of :client, :doc_number, :amount, :discount, :date, :maturity
-
-  def client_name
-    self.client.name
-  end
+  validates_presence_of :client, :doc_number, :amount, :date, :maturity
 
   def to_b
     bank = Bank.where(default_bank: true).first!
 
     boleto_data = {}
-    boleto_data.merge! cedente
-    boleto_data.merge! sacado
+    boleto_data.merge! client.to_h
     boleto_data.merge! bank.to_h
     boleto_data.merge! to_h
+    boleto_data.merge! instructions(bank)
+
+    unless printed?
+      self.printed = true
+      self.save!
+    end
 
     if bank.name == "Santander"
       Brcobranca::Boleto::Santander.new(boleto_data)
@@ -33,32 +32,25 @@ class Boleto < ActiveRecord::Base
     result[:numero_documento] = doc_number
     result[:dias_vencimento] = days_to_maturity
     result[:data_documento] = date.to_date
-    result[:instrucao1] = discount_text if discount
-    result[:instrucao2] = interest_text
 
     result
   end
 
-  def discount_text
-    "Desconto de R$ #{discount} até o vencimento"
-  end
+  def instructions(bank)
+    result = {}
+    count = 1
 
-  def interest_text
-    "Juros de mora de 2.0% mensal(R$ 0,09 ao dia)"
-  end
+    if discount && discount > 0
+      discount_display = discount.to_s.gsub('.', ',').gsub(/\B(?=(\d{3})+(?!\d))/, '.')
+      result["instrucao#{count}".to_sym] = "Desconto de R$ #{discount_display} até o vencimento"
+      count += 1
+    end
 
-  def sacado
-    {
-        sacado: client.name,
-        sacado_documento: client.document
-    }
-  end
+    if bank.instrucao_juros.present?
+      result["instrucao#{count}".to_sym] = bank.instrucao_juros
+    end
 
-  def cedente
-    {
-        cedente: "Auto Posto Oliveira LTDA",
-        documento_cedente: "58.528.845/0001-34"
-    }
+    result
   end
 
   private

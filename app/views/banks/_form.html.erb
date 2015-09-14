@@ -20,6 +20,17 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
+
+  <div class="field">
+    <%= f.label :cedente %><br>
+    <%= f.text_field :cedente %>
+  </div>
+
+  <div class="field">
+    <%= f.label :cedente_doc %><br>
+    <%= f.text_field :cedente_doc %>
+  </div>
+
   <div class="field">
     <%= f.label :agencia %><br>
     <%= f.text_field :agencia %>
@@ -44,7 +55,11 @@
     <%= f.label :convenio %><br>
     <%= f.text_field :convenio %>
   </div>
+  <div class="field">
+    <%= f.label :instrucao_juros %><br>
+    <%= f.text_field :instrucao_juros %>
+  </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit nil, class: 'btn' %>
   </div>
 <% end %>

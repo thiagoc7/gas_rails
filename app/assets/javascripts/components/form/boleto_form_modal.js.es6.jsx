@@ -12,6 +12,7 @@ var BoletoFormModal = React.createClass({
       ref: null,
       name: null,
       document: null,
+      address: null,
       isOpen: false
     }
   },
@@ -45,35 +46,50 @@ var BoletoFormModal = React.createClass({
 
           <form onSubmit={this._handleSubmit}>
 
-            <div className="modal-content row">
+            <div className="modal-content">
 
-              <div className="field col s2">
-                <label>Ref</label>
-                <input
-                    type="text"
-                    ref="clientRef"
-                    value={this.state.ref}
-                    onChange={e => this.setState({ref: e.target.value})}
-                    />
+              <div className="row">
+
+                <div className="field col s2">
+                  <label>Ref</label>
+                  <input
+                      type="text"
+                      ref="clientRef"
+                      value={this.state.ref}
+                      onChange={e => this.setState({ref: e.target.value})}
+                      />
+                </div>
+
+                <div className="field col s5">
+                  <label>Nome</label>
+                  <input
+                      type="text"
+                      ref="clientName"
+                      value={this.state.name}
+                      onChange={e => this.setState({name: e.target.value})}
+                      />
+                </div>
+
+                <div className="field col s5">
+                  <label>Documento</label>
+                  <input
+                      type="text"
+                      value={this.state.document}
+                      onChange={e => this.setState({document: e.target.value})}
+                      />
+                </div>
+
               </div>
 
-              <div className="field col s5">
-                <label>Nome</label>
-                <input
-                    type="text"
-                    ref="clientName"
-                    value={this.state.name}
-                    onChange={e => this.setState({name: e.target.value})}
-                    />
-              </div>
-
-              <div className="field col s5">
-                <label>Documento</label>
-                <input
-                    type="text"
-                    value={this.state.document}
-                    onChange={e => this.setState({document: e.target.value})}
-                    />
+              <div className="row">
+                <div className="field col s12">
+                  <label>Endereço</label>
+                  <input
+                      type="text"
+                      value={this.state.address}
+                      onChange={e => this.setState({address: e.target.value})}
+                      />
+                </div>
               </div>
 
             </div>

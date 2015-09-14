@@ -32,18 +32,25 @@ Client.create(name:"Thiago Correa", document: "293.745.248-56", ref: 1040)
 
 Bank.create(
         name: "Bradesco",
+        cedente: "Auto Posto Oliveira LTDA",
+        cedente_doc: "58.528.845/0001-34",
+        cedente_address: "Rua São Francisco, 12. Osasco-SP",
         agencia: "3900",
         conta_corrente: "12",
         carteira: "09",
-        default_bank: true
+        default_bank: true,
+        instrucao_juros: "Após o Vencimento multa de 5,0% e juros de 4%a.m."
 )
 
 Bank.create(
     name: "Santander",
+    cedente: "Auto Posto Oliveira LTDA",
+    cedente_doc: "58.528.845/0001-34",
     agencia: "2171",
     conta_corrente: "13000075",
     variacao: "9",
-    convenio: "204218"
+    convenio: "204218",
+    instrucao_juros: "Após o Vencimento multa de 5,0% e juros de 4%a.m."
 )
 
 Boleto.create(

@@ -1,5 +1,5 @@
 class BanksController < ApplicationController
-  before_action :set_bank, only: [:show, :edit, :update, :destroy]
+  before_action :set_bank, only: [:edit, :update, :destroy]
 
   def index
     @banks = Bank.all
@@ -44,6 +44,19 @@ class BanksController < ApplicationController
     end
 
     def bank_params
-      params.require(:bank).permit(:default_bank, :name, :agencia, :conta_corrente, :variacao, :aceite, :carteira, :convenio)
+      params.require(:bank).permit(
+          :default_bank,
+          :name,
+          :cedente,
+          :cedente_doc,
+          :cedente_address,
+          :agencia,
+          :conta_corrente,
+          :variacao,
+          :aceite,
+          :carteira,
+          :convenio,
+          :instrucao_juros
+      )
     end
 end

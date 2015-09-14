@@ -16,14 +16,18 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
+    <%= f.label :ref %><br>
+    <%= f.number_field :ref %>
+  </div>
+  <div class="field">
     <%= f.label :document %><br>
     <%= f.text_field :document %>
   </div>
   <div class="field">
-    <%= f.label :ref %><br>
-    <%= f.number_field :ref %>
+    <%= f.label :address %><br>
+    <%= f.text_field :address %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit nil, class: 'btn' %>
   </div>
 <% end %>

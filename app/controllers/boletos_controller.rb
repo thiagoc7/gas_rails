@@ -8,6 +8,8 @@ class BoletosController < ApplicationController
       @boletos = @boletos.where(doc_number: params[:doc_number]) unless params[:doc_number].empty?
       @boletos = @boletos.where('maturity >= :date', date: params["date_begin"]) unless params[:date_begin].empty?
       @boletos = @boletos.where('maturity <= :date', date: params["date_end"]) unless params[:date_end].empty?
+    else
+      @boletos = Boleto.where(printed: false)
     end
   end
 
