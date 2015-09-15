@@ -1,0 +1,51 @@
+<h5><%= @result.title %></h5>
+
+<table>
+  <thead>
+  <tr>
+    <th>Client</th>
+    <th>NF</th>
+    <th>Vencimento</th>
+    <th>Pagamento</th>
+    <th>Valor NF</th>
+    <th>Desconto</th>
+    <th>Valor Pago</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @result.boletos.each do |boleto| %>
+    <tr>
+      <td><%= boleto[:client] %></td>
+      <td><%= boleto[:doc_number] %></td>
+      <td><%= boleto[:maturity] %></td>
+      <td><%= boleto[:paid_on] %></td>
+      <td><%= boleto[:amount] %></td>
+      <td><%= boleto[:discount] %></td>
+      <td><%= boleto[:amount_paid] %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<h5>Erros</h5>
+
+<table>
+  <thead>
+  <tr>
+    <th>NF</th>
+    <th>Pagamento</th>
+    <th>Valor Pago</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @result.errors.each do |error| %>
+    <tr>
+      <td><%= error[:doc_number] %></td>
+      <td><%= error[:paid_on] %></td>
+      <td><%= error[:amount_paid] %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

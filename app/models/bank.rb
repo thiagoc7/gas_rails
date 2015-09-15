@@ -3,6 +3,10 @@ class Bank < ActiveRecord::Base
 
   after_save :ensure_only_one_default
 
+  def self.default
+    Bank.where(default_bank: true).first!
+  end
+
   def to_h
     result = {}
 

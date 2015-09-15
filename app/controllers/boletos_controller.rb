@@ -1,5 +1,6 @@
 class BoletosController < ApplicationController
   before_action :set_boleto, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authenticate_user!, only: [:import, :retorno]
 
   def index
     if params[:ref] || params[:doc_number] || params[:date_begin] || params[:date_end]
@@ -29,6 +30,17 @@ class BoletosController < ApplicationController
     end
 
     send_data Brcobranca::Boleto::Base.lote(result), filename: "boletos.pdf"
+  end
+
+  def import
+    @result = Retorno.new(params[:file])
+
+    flash[:success] = "Imported!"
+    render "boletos/retorno_result"
+  end
+
+  def retorno
+    @bank = Bank.default
   end
 
   def edit

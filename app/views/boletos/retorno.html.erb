@@ -1,0 +1,12 @@
+<h1>retorno</h1>
+
+<%= form_tag import_boletos_path, multipart: true do %>
+  <div class="file-field input-field">
+    <input class="file-path validate" placeholder='<%= "selecione o arquivo retorno do #{@bank.name}" %>' type="text"/>
+    <div class="btn">
+      <span>File</span>
+      <%= file_field_tag :file %>
+    </div>
+  </div>
+  <%= submit_tag "Importar Arquivo", class: 'btn' %>
+<% end %>

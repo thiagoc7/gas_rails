@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     collection do
       get :generate
       get :generate_many
+      get :retorno
+      post :import
     end
   end
 

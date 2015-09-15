@@ -5,7 +5,7 @@ class Boleto < ActiveRecord::Base
   validates_presence_of :client, :doc_number, :amount, :date, :maturity
 
   def to_b
-    bank = Bank.where(default_bank: true).first!
+    bank = Bank.default
 
     boleto_data = {}
     boleto_data.merge! client.to_h
